@@ -3,3 +3,5 @@ x64/
 *.user
 CoopersReturn/x64/
 CoopersReturn/Shaders/
+
+*.xcf
