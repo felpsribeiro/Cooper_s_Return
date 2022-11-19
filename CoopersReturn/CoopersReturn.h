@@ -12,7 +12,7 @@
 
 // ------------------------------------------------------------------------------
 
-enum ObjectIds { PLAYER, MISSILE, BLUE, GREEN, MAGENTA, ORANGE, WALLHIT };
+enum ObjectIds { PLAYER, MISSILE, COMET };
 
 // ------------------------------------------------------------------------------
 

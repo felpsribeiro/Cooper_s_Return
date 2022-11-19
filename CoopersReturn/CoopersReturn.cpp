@@ -3,6 +3,7 @@
 #include "CoopersReturn.h"
 #include "Engine.h"
 #include "Menu.h"
+#include "Comet.h"
 
 // ------------------------------------------------------------------------------
 
@@ -38,6 +39,7 @@ void CoopersReturn::Init()
     // adiciona objetos na cena (sem colis�o)
     scene->Add(player, MOVING);
     scene->Add(new Menu(), STATIC);
+    scene->Add(new Comet(player), STATIC);
 
     // ----------------------
     // inicializa a viewport
