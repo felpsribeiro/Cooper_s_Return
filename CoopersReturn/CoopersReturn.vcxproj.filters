@@ -102,7 +102,7 @@
     <ClCompile Include="CoopersReturn.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Delay.cpp">
+    <ClCompile Include="Menu.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Hud.cpp">
@@ -194,7 +194,7 @@
     <ClInclude Include="CoopersReturn.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Delay.h">
+    <ClInclude Include="Menu.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Hud.h">

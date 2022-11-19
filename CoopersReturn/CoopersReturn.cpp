@@ -2,7 +2,7 @@
 #include "Resources.h"
 #include "CoopersReturn.h"
 #include "Engine.h"
-#include "Delay.h"
+#include "Menu.h"
 
 // ------------------------------------------------------------------------------
 
@@ -11,6 +11,7 @@ Audio  * CoopersReturn::audio   = nullptr;
 Scene  * CoopersReturn::scene   = nullptr;
 bool     CoopersReturn::viewHUD = false;
 bool     CoopersReturn::active  = false;
+Timer    CoopersReturn::timer;
 
 // ------------------------------------------------------------------------------
 
@@ -31,14 +32,12 @@ void CoopersReturn::Init()
     // carrega/incializa objetos
     backg   = new Background("Resources/Space.jpg");
     player  = new Player();
+    player->Init();
     scene   = new Scene();
 
-    // cria o painel de informa��es
-    hud = new Hud();
-
     // adiciona objetos na cena (sem colis�o)
-    scene->Add(player, STATIC);
-    scene->Add(new Delay(), STATIC);
+    scene->Add(player, MOVING);
+    scene->Add(new Menu(), STATIC);
 
     // ----------------------
     // inicializa a viewport
@@ -59,6 +58,10 @@ void CoopersReturn::Init()
 
 void CoopersReturn::Update()
 {
+    //// toca m�sica do jogo
+    //CoopersReturn::audio->Play(THEME, true);
+    //CoopersReturn::viewHUD = true;
+
     // sai com o pressionamento da tecla ESC
     if (window->KeyDown(VK_ESCAPE))
         window->Close();
@@ -72,8 +75,8 @@ void CoopersReturn::Update()
         viewBBox = !viewBBox;
 
     // ativa ou desativa o heads up display
-    if (window->KeyPress('H'))
-        viewHUD = !viewHUD;
+    if (window->KeyPress(VK_RETURN))
+        active = true;
 
     // --------------------
     // atualiza a viewport
@@ -117,10 +120,6 @@ void CoopersReturn::Draw()
     // desenha a cena
     scene->Draw();
 
-    // desenha painel de informa��es
-    if (viewHUD)
-        hud->Draw();
-
     // desenha bounding box
     if (viewBBox)
         scene->DrawBBox();
@@ -131,7 +130,6 @@ void CoopersReturn::Draw()
 void CoopersReturn::Finalize()
 {
     delete audio;
-    delete hud;
     delete scene;
     delete backg;
 }
@@ -162,7 +160,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     Game * game = new CoopersReturn();
 
     // configura o jogo
-    game->Size(3840, 2160);
+    game->Size(2100, 1181);
     
     // inicia execu��o
     int status = engine->Start(game);

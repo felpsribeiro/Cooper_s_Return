@@ -9,16 +9,11 @@ Player::Player()
 {
     // configura��o do objeto
     sprite = new Sprite("Resources/Ranger.png");
-    speed = new Vector(0.0f, 0.0f);
     BBox(new Circle(18.0f));
-    MoveTo(game->CenterX(), game->CenterY());
     type = PLAYER;
-
     engine = new TileSet("Resources/Propellant.png", 50, 32, 1, 8);
     anim = new Animation(engine, 0.120f, true);
-    uint Seq[8] = {0, 1, 2, 3, 4, 5, 6, 7};
-    anim->Add(0, Seq, 8);
-    anim->Select(0);
+    speed = new Vector(0.0f, 0.0f);
 
     //// configura��o do gerador de part�culas
     // Generator emitter;
@@ -48,6 +43,14 @@ Player::~Player()
     // delete tail;
     delete engine;
     delete anim;
+}
+
+// -------------------------------------------------------------------------------
+
+void Player::Init()
+{
+    speed = new Vector(0.0f, 0.0f);
+    MoveTo(game->CenterX(), game->CenterY());
 }
 
 // -------------------------------------------------------------------------------
@@ -126,7 +129,7 @@ void Player::Draw()
 {
     if (CoopersReturn::active)
     {
-        sprite->Draw(x, y, Layer::MIDDLE, scale, -speed->Angle() + 90.0f);
+        sprite->Draw(x, y, Layer::MIDDLE, scale, -speed->Angle());
     }
     else
     {

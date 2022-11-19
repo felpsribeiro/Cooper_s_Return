@@ -9,7 +9,6 @@
 #include "Scene.h"
 #include "Background.h"
 #include "Player.h"
-#include "Hud.h"
 
 // ------------------------------------------------------------------------------
 
@@ -25,7 +24,6 @@ class CoopersReturn : public Game
 {
 private:
     Background * backg = nullptr;   // pano de fundo
-    Hud * hud = nullptr;            // painel de informa��es
     bool viewBBox = false;          // visualiza��o das bouding boxes
 
 public:
@@ -34,6 +32,7 @@ public:
     static Scene * scene;           // cena do jogo
     static bool viewHUD;            // visualiza��o do painel
     static bool active;             // jogo iniciou
+    static Timer timer;            // medidor de tempo
 
     void Init();                    // inicializa��o
     void Update();                  // atualiza��o

@@ -16,7 +16,7 @@ class Player : public Object
 {
 private:
     Sprite * sprite;                    // sprite do objeto
-    //Particles * tail;                   // calda do jogador
+    //Particles * tail;                 // calda do jogador
     TileSet * engine;                   // motor
     Animation * anim;                   // animação do motor
     float scale = 1.0f;
@@ -27,6 +27,7 @@ public:
     Player();                           // construtor
     ~Player();                          // destrutor
     
+    void Init();                        // set as config iniciais
     void Move(Vector && v);             // movimenta jogador
     void Update();                      // atualiza��o
     void Draw();                        // desenho
