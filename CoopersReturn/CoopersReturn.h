@@ -33,6 +33,7 @@ public:
     static Audio * audio;           // sitema de �udio
     static Scene * scene;           // cena do jogo
     static bool viewHUD;            // visualiza��o do painel
+    static bool active;             // jogo iniciou
 
     void Init();                    // inicializa��o
     void Update();                  // atualiza��o

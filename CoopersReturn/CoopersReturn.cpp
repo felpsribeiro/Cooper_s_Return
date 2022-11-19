@@ -10,6 +10,7 @@ Player * CoopersReturn::player  = nullptr;
 Audio  * CoopersReturn::audio   = nullptr;
 Scene  * CoopersReturn::scene   = nullptr;
 bool     CoopersReturn::viewHUD = false;
+bool     CoopersReturn::active  = false;
 
 // ------------------------------------------------------------------------------
 
