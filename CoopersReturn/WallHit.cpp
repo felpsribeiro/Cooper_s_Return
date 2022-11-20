@@ -53,7 +53,7 @@ WallHit::WallHit(float pX, float pY)
 
     // gera 25 part�culas na posi��o de contato
     sparks->Generate(pX, pY, 25);
-    type = WALLHIT;
+    //type = WALLHIT;
 }
 
 // ---------------------------------------------------------------------------------

@@ -3,14 +3,12 @@
 #include "CoopersReturn.h"
 #include "Engine.h"
 #include "Menu.h"
-#include "Comet.h"
 
 // ------------------------------------------------------------------------------
 
 Player * CoopersReturn::player  = nullptr;
 Audio  * CoopersReturn::audio   = nullptr;
 Scene  * CoopersReturn::scene   = nullptr;
-bool     CoopersReturn::viewHUD = false;
 bool     CoopersReturn::active  = false;
 Timer    CoopersReturn::timer;
 
@@ -36,10 +34,11 @@ void CoopersReturn::Init()
     player->Init();
     scene   = new Scene();
 
-    // adiciona objetos na cena (sem colis�o)
-    scene->Add(player, MOVING);
+    // adiciona objetos na cena
     scene->Add(new Menu(), STATIC);
-    scene->Add(new Comet(player), STATIC);
+    scene->Add(player, MOVING);
+
+    obstacle = new Obstacle();
 
     // ----------------------
     // inicializa a viewport
@@ -78,7 +77,10 @@ void CoopersReturn::Update()
 
     // ativa ou desativa o heads up display
     if (window->KeyPress(VK_RETURN))
+    {
         active = true;
+        auxTimer.Start();
+    }
 
     // --------------------
     // atualiza a viewport
@@ -109,6 +111,43 @@ void CoopersReturn::Update()
     {
         viewport.top = game->Height() - window->Height();
         viewport.bottom = game->Height();
+    }
+
+    // ------------------------------------------------
+    // gerencia elementos de acordo com o tempo de jogo
+    // ------------------------------------------------
+
+    if (!timer.Elapsed(60.0f)) // primeira etapa do jogo -> 0:00 à 0:59
+    {
+        if (auxTimer.Elapsed(3.0f))
+        {
+            obstacle->Generete(ASTEROID, 50.0f);
+            auxTimer.Reset();
+        }
+    }
+    else if (!timer.Elapsed(120.0f)) // segunda etapa do jogo -> 1:00 à 1:59
+    {
+        if (auxTimer.Elapsed(3.0f))
+        {
+            obstacle->Generete(ASTEROID, 50.0f);
+            obstacle->Generete(METEOROID, 30.0f);
+            auxTimer.Reset();
+        }
+    }
+    else if (!timer.Elapsed(180.0f)) // terceira etapa do jogo -> 2:00 à 2:59
+    {
+        if (auxTimer.Elapsed(3.0f))
+        {
+            //obstacle->Generete(ASTEROID, 30.0f);
+            obstacle->Generete(ASTEROID, 50.0f);
+            obstacle->Generete(METEOROID, 30.0f);
+            obstacle->Generete(COMET, 200.0f);
+            auxTimer.Reset();
+        }
+    }
+    else if (!timer.Elapsed(240.0f))
+    {
+
     }
 } 
 

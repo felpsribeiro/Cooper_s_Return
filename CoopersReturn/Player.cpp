@@ -134,7 +134,7 @@ void Player::Draw()
     else
     {
         sprite->Draw(x, y);
-        anim->Draw(x - 53.0f, y);
+        anim->Draw(x - 53.0f, y, Layer::FRONT);
     }
     // tail->Draw(Layer::LOWER, 1.0f);
 }

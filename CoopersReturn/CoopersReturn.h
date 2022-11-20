@@ -9,10 +9,11 @@
 #include "Scene.h"
 #include "Background.h"
 #include "Player.h"
+#include "Obstacle.h"
 
 // ------------------------------------------------------------------------------
 
-enum ObjectIds { PLAYER, MISSILE, COMET };
+enum ObjectIds { PLAYER, MISSILE, COMET, ASTEROID, METEOROID };
 
 // ------------------------------------------------------------------------------
 
@@ -25,12 +26,13 @@ class CoopersReturn : public Game
 private:
     Background * backg = nullptr;   // pano de fundo
     bool viewBBox = false;          // visualiza��o das bouding boxes
+    Obstacle* obstacle;
+    Timer auxTimer;
 
 public:
     static Player * player;         // nave controlada pela jogador
     static Audio * audio;           // sitema de �udio
     static Scene * scene;           // cena do jogo
-    static bool viewHUD;            // visualiza��o do painel
     static bool active;             // jogo iniciou
     static Timer timer;            // medidor de tempo
 
