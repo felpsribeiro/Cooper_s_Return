@@ -9,7 +9,23 @@ Player::Player()
 {
     // configura��o do objeto
     sprite = new Sprite("Resources/Ranger.png");
-    BBox(new Circle(18.0f));
+    
+    Point vertex[9] =
+    {
+        Point(-31, -9),
+        Point(-24, -19),
+        //Point(-19, -17),
+        Point(1, -21),
+        Point(28, -5),
+        Point(28, 10),
+        Point(1, 21),
+        Point(-19, 15),
+        Point(-28, 13),
+        Point(-31, 2)
+    };
+
+    BBox(new Poly(vertex, 9));
+    
     type = PLAYER;
     engine = new TileSet("Resources/Propellant.png", 50, 32, 1, 8);
     anim = new Animation(engine, 0.120f, true);
@@ -58,9 +74,10 @@ void Player::Init()
 
 // -------------------------------------------------------------------------------
 
-void Player::Move(Vector &&v)
+void Player::Move(Vector&& v, bool freio = false)
 {
     speed->Add(v);
+    if(!freio) BBox()->RotateTo(360.0f - v.Angle());
 
     // limita velocidade m�xima
     if (speed->Magnitude() > 8.0f)
@@ -95,7 +112,7 @@ void Player::Update()
                 else
                 {
                     // comece a frear
-                    Move(Vector(speed->Angle() + 180.0f, 5.0f * gameTime));
+                    Move(Vector(speed->Angle() + 180.0f, 5.0f * gameTime), true);
                 }
             }
             else
