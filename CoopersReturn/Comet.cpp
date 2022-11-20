@@ -55,7 +55,7 @@ Comet::~Comet()
 void Comet::OnCollision(Object * obj)
 {
     if (obj->Type() == MISSILE)
-        GeoWars::scene->Delete(this, MOVING);
+        CoopersReturn::scene->Delete(this, MOVING);
 }
 
 // -------------------------------------------------------------------------------
