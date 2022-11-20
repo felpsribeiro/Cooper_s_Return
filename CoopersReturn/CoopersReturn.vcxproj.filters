@@ -111,7 +111,7 @@
     <ClCompile Include="Random.cpp">
       <Filter>Engine\Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Comet.cpp">
+    <ClCompile Include="Obstacle.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -203,7 +203,7 @@
     <ClInclude Include="Random.h">
       <Filter>Engine\Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Comet.h">
+    <ClInclude Include="Obstacle.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

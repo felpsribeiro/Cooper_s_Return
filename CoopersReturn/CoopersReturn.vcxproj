@@ -175,7 +175,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Comet.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Particles.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Random.cpp" />
@@ -205,7 +205,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Comet.h" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Particles.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Random.h" />
