@@ -11,6 +11,8 @@ Audio  * CoopersReturn::audio   = nullptr;
 Scene  * CoopersReturn::scene   = nullptr;
 bool     CoopersReturn::active  = false;
 Timer    CoopersReturn::timer;
+Controller * CoopersReturn::gamepad = new Controller();
+bool         CoopersReturn::ctrl = false;
 
 // ------------------------------------------------------------------------------
 
@@ -53,6 +55,9 @@ void CoopersReturn::Init()
     viewport.right = viewport.left + window->Width();
     viewport.top = 0.0f + dify;
     viewport.bottom = viewport.top + window->Height();
+
+    ctrl = gamepad->XboxInitialize();
+
 }
 
 // ------------------------------------------------------------------------------
@@ -173,6 +178,7 @@ void CoopersReturn::Finalize()
     delete audio;
     delete scene;
     delete backg;
+    delete gamepad;
 }
 
 

@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include "Background.h"
 #include "Player.h"
+#include "Controller.h"
 #include "Obstacle.h"
 
 // ------------------------------------------------------------------------------
@@ -34,7 +35,9 @@ public:
     static Audio * audio;           // sitema de �udio
     static Scene * scene;           // cena do jogo
     static bool active;             // jogo iniciou
-    static Timer timer;            // medidor de tempo
+    static Timer timer;             // medidor de tempo
+    static Controller * gamepad;    // controlador de jogo
+    static bool ctrl;
 
     void Init();                    // inicializa��o
     void Update();                  // atualiza��o

@@ -28,7 +28,7 @@ public:
     ~Player();                          // destrutor
     
     void Init();                        // set as config iniciais
-    void Move(Vector && v);             // movimenta jogador
+    void Move(Vector && v, bool freio);             // movimenta jogador
     void Update();                      // atualiza��o
     void Draw();                        // desenho
 }; 
