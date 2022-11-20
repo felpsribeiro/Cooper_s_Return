@@ -104,9 +104,15 @@ void Player::Update()
                 Move(Vector(ang, mag * gameTime));
             }
 
-            // dispara míssil
-            if (CoopersReturn::gamepad->XboxButton(LeftThumb))
+            // angulo de tiro
+            float shot_ang = Line::Angle(Point(0, 0), Point(CoopersReturn::gamepad->XboxAnalog(ThumbLX) / 25.0f, -1.0f * (CoopersReturn::gamepad->XboxAnalog(ThumbLY) / 25.0f)));
+            
+            bool x = (CoopersReturn::gamepad->XboxAnalog(ThumbLX) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLX) < -100);
+            bool y = (CoopersReturn::gamepad->XboxAnalog(ThumbLY) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLY) < -100);
+
+            if (x || y)
             {
+                Move(Vector(shot_ang, 0.0f));
                 CoopersReturn::audio->Play(FIRE);
                 CoopersReturn::scene->Add(new Missile(), STATIC);
             }
