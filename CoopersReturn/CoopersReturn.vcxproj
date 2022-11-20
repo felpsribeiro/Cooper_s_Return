@@ -172,10 +172,10 @@
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="CoopersReturn.cpp" />
     <ClCompile Include="Graphics.cpp" />
-    <ClCompile Include="Hud.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Comet.cpp" />
     <ClCompile Include="Particles.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Random.cpp" />
@@ -202,10 +202,10 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="CoopersReturn.h" />
     <ClInclude Include="Graphics.h" />
-    <ClInclude Include="Hud.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Comet.h" />
     <ClInclude Include="Particles.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Random.h" />
