@@ -62,7 +62,7 @@ void Player::Move(Vector&& v, bool freio = false)
 
 void Player::Update()
 {
-    if (CoopersReturn::state == PLAY)
+    if (CoopersReturn::state != INIT)
     {
         // magnitude do vetor acelera��o
         float accel = 30.0f * gameTime;

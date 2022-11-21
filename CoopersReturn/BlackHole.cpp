@@ -11,8 +11,6 @@ BlackHole::BlackHole()
     eventHorizon = new TileSet("Resources/Gangantua.png", 2100, 345, 1, 5);
     anim = new Animation(eventHorizon, 0.060f, true);
     type = HOLE;
-    
-    BBox(new Line(0.0f, -346.0f, game->Width(), -346.0f));
 
     MoveTo(game->CenterX(), -173.0f);
 }
@@ -32,13 +30,13 @@ void BlackHole::Update()
 {
     if (y < 1354.0f)
     {
-        float accel = 40.0f * gameTime;
+        float accel = 50.0f * gameTime;
         Translate(0, accel);
     }
     else
     {
         CoopersReturn::Restart();
-        CoopersReturn::scene->Delete(this, MOVING);
+        CoopersReturn::scene->Delete(this, STATIC);
     }
 
     anim->NextFrame();
