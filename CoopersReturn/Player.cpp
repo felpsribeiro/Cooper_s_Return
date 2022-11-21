@@ -131,6 +131,7 @@ void Player::Update()
                 if (x || y)
                 {
                     Move(Vector(shot_ang, 0.0f));
+                    
                     CoopersReturn::audio->Play(FIRE);
                     CoopersReturn::scene->Add(new Missile(), STATIC);
                 }

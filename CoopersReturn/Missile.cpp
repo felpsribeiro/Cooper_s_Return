@@ -22,7 +22,9 @@ Missile::Missile()
     speed.ScaleTo(15.0f);
     
     // move para posi��o
-    MoveTo(player->X() + 22 * cos(speed.Radians()), player->Y() - 22 * sin(speed.Radians()));
+    MoveTo(player->X() + 35 * cos(speed.Radians()), 
+            player->Y() - 35 * sin(speed.Radians()));
+    
     RotateTo(-player->speed->Angle() + 90.0f);
 
     // define tipo
