@@ -1,6 +1,6 @@
 
-#ifndef _GEOWARS_MENU_H_
-#define _GEOWARS_MENU_H_
+#ifndef _COOPER_MENU_H_
+#define _COOPER_MENU_H_
 
 // --------------------------------------------------------------------------------
 
@@ -17,7 +17,6 @@ class Menu : public Object
 private:
     Sprite * logo;          // logotipo do jogo
     Sprite * panel;         // painel do jogo
-    bool played;            // intro n�o tocada ainda
 
     Font* font = nullptr;              // fonte para exibi��o normal
     Font* bold = nullptr;              // fonte para exibi��o negrito

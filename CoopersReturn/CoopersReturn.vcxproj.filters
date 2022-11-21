@@ -114,6 +114,9 @@
     <ClCompile Include="Obstacle.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="BlackHole.cpp">
+      <Filter>Game\Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resources.h">
@@ -204,6 +207,9 @@
       <Filter>Engine\Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Obstacle.h">
+      <Filter>Game\Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackHole.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

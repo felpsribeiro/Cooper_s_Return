@@ -18,7 +18,6 @@ Menu::Menu()
 {
     logo = new Sprite("Resources/Logo.png");
     panel = new Sprite("Resources/Panel.png");
-    played = false;
 
     font = new Font("Resources/Tahoma14.png");
     font->Spacing("Resources/Tahoma14.dat");
@@ -46,7 +45,11 @@ void Menu::Update()
     text2.str("");
     text3.str("");
 
-    if (played)
+    if (CoopersReturn::state == INIT)
+    {
+        text1 << "Precione Enter para iniciar o jogo...";
+    }
+    else if (CoopersReturn::state == PLAY)
     {
        if (!CoopersReturn::timer.Elapsed(5.0f))
        {
@@ -70,18 +73,6 @@ void Menu::Update()
        {
            CoopersReturn::scene->Delete();
        }
-    }
-    else
-    {
-        if (CoopersReturn::active)
-        {
-            played = true;
-            CoopersReturn::timer.Reset();
-        }
-        else
-        {
-            text1 << "Precione Enter para iniciar o jogo...";
-        }
     }
 }
 

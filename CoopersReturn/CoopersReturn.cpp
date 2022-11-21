@@ -9,7 +9,7 @@
 Player * CoopersReturn::player  = nullptr;
 Audio  * CoopersReturn::audio   = nullptr;
 Scene  * CoopersReturn::scene   = nullptr;
-bool     CoopersReturn::active  = false;
+uint     CoopersReturn::state;
 Timer    CoopersReturn::timer;
 Controller * CoopersReturn::gamepad = new Controller();
 bool         CoopersReturn::ctrl = false;
@@ -34,7 +34,6 @@ void CoopersReturn::Init()
     // carrega/incializa objetos
     backg   = new Background("Resources/Space.jpg");
     player  = new Player();
-    player->Init();
     scene   = new Scene();
 
     // adiciona objetos na cena
@@ -42,6 +41,8 @@ void CoopersReturn::Init()
     scene->Add(player, MOVING);
 
     obstacle = new Obstacle();
+
+    state = INIT;
 
     // ----------------------
     // inicializa a viewport
@@ -85,7 +86,8 @@ void CoopersReturn::Update()
     gamepad->XboxUpdateState();
     if (window->KeyPress(VK_RETURN) || gamepad->XboxButton(ButtonStart))
     {
-        active = true;
+        state = PLAY;
+        timer.Reset();
         auxTimer.Start();
     }
 
@@ -123,38 +125,40 @@ void CoopersReturn::Update()
     // ------------------------------------------------
     // gerencia elementos de acordo com o tempo de jogo
     // ------------------------------------------------
-
-    if (!timer.Elapsed(60.0f)) // primeira etapa do jogo -> 0:00 à 0:59
-    {
-        if (auxTimer.Elapsed(3.0f))
+    if (state == PLAY) {
+        if (!timer.Elapsed(60.0f)) // primeira etapa do jogo -> 0:00 à 0:59
         {
-            obstacle->Generate(ASTEROID, 50.0f);
-            auxTimer.Reset();
+            if (auxTimer.Elapsed(4.0f))
+            {
+                obstacle->Generate(ASTEROID, 50.0f);
+                auxTimer.Reset();
+            }
         }
-    }
-    else if (!timer.Elapsed(120.0f)) // segunda etapa do jogo -> 1:00 à 1:59
-    {
-        if (auxTimer.Elapsed(3.0f))
+        else if (!timer.Elapsed(120.0f)) // segunda etapa do jogo -> 1:00 à 1:59
         {
-            obstacle->Generate(ASTEROID, 50.0f);
-            obstacle->Generate(METEOROID, 30.0f);
-            auxTimer.Reset();
+            if (auxTimer.Elapsed(3.0f))
+            {
+                obstacle->Generate(ASTEROID, 50.0f);
+                obstacle->Generate(METEOROID, 30.0f);
+                auxTimer.Reset();
+            }
         }
-    }
-    else if (!timer.Elapsed(180.0f)) // terceira etapa do jogo -> 2:00 à 2:59
-    {
-        if (auxTimer.Elapsed(3.0f))
+        else if (!timer.Elapsed(180.0f)) // terceira etapa do jogo -> 2:00 à 2:59
         {
-            //obstacle->Generate(ASTEROID, 30.0f);
-            obstacle->Generate(ASTEROID, 50.0f);
-            obstacle->Generate(METEOROID, 30.0f);
-            obstacle->Generate(COMET, 200.0f);
-            auxTimer.Reset();
+            if (auxTimer.Elapsed(3.0f))
+            {
+                //obstacle->Generete(ASTEROID, 30.0f);
+                obstacle->Generate(ASTEROID, 50.0f);
+                obstacle->Generate(METEOROID, 30.0f);
+                obstacle->Generate(COMET, 200.0f);
+                auxTimer.Reset();
+            }
         }
-    }
-    else if (!timer.Elapsed(240.0f))
-    {
-
+        else if (scene->Size() == 1)
+        {
+            BlackHole* hole = new BlackHole();
+            scene->Add(hole, MOVING);
+        }
     }
 } 
 
@@ -181,6 +185,19 @@ void CoopersReturn::Finalize()
     delete scene;
     delete backg;
     delete gamepad;
+}
+
+// ------------------------------------------------------------------------------
+
+void CoopersReturn::Restart()
+{
+    state = INIT;
+
+    player = new Player();
+
+    // adiciona objetos na cena
+    scene->Add(new Menu(), STATIC);
+    scene->Add(player, MOVING);
 }
 
 

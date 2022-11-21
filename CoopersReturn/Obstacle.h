@@ -1,6 +1,6 @@
 
-#ifndef _GEOWARS_OBSTACLE_H_
-#define _GEOWARS_OBSTACLE_H_
+#ifndef _COOPER_OBSTACLE_H_
+#define _COOPER_OBSTACLE_H_
 
 // ---------------------------------------------------------------------------------
 

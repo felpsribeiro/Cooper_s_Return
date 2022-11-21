@@ -1,6 +1,6 @@
 
-#ifndef _GEOWARS_PLAYER_H_
-#define _GEOWARS_PLAYER_H_
+#ifndef _COOPER_PLAYER_H_
+#define _COOPER_PLAYER_H_
 
 // ---------------------------------------------------------------------------------
 

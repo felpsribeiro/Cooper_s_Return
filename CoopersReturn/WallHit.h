@@ -1,6 +1,6 @@
 
-#ifndef _GEOWARS_WALLHIT_H_
-#define _GEOWARS_WALLHIT_H_
+#ifndef _COOPER_WALLHIT_H_
+#define _COOPER_WALLHIT_H_
 
 // ---------------------------------------------------------------------------------
 
