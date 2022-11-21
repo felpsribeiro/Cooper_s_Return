@@ -51,8 +51,6 @@ void Missile::Update()
         // volume do som de destrui��o depende da dist�ncia para o jogador
         float distance = Point::Distance(Point(x, y), Point(player->X(), player->Y()));
         float level = (MaxDistance - distance) / MaxDistance * BaseVolume;
-        CoopersReturn::audio->Volume(HITWALL, level);
-        CoopersReturn::audio->Play(HITWALL);
 
         // adiciona explos�o na cena
         CoopersReturn::scene->Add(new WallHit(x,y), STATIC);
