@@ -31,6 +31,7 @@ public:
     void Move(Vector && v, bool freio);             // movimenta jogador
     void Update();                      // atualiza��o
     void Draw();                        // desenho
+    void OnCollision(Object* obj);
 }; 
 // ---------------------------------------------------------------------------------
 

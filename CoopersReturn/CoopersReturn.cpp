@@ -13,6 +13,7 @@ bool     CoopersReturn::active  = false;
 Timer    CoopersReturn::timer;
 Controller * CoopersReturn::gamepad = new Controller();
 bool         CoopersReturn::ctrl = false;
+bool         CoopersReturn::lost = false;
 
 // ------------------------------------------------------------------------------
 
@@ -57,7 +58,7 @@ void CoopersReturn::Init()
     viewport.bottom = viewport.top + window->Height();
 
     ctrl = gamepad->XboxInitialize();
-
+    lost = false;
 }
 
 // ------------------------------------------------------------------------------
