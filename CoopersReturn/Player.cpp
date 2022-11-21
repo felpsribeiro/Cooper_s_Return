@@ -187,7 +187,7 @@ void Player::Draw()
           anim->Draw(x - 53.0f, y, Layer::UPPER);
         }
         else
-          sprite->Draw(x, y, Layer::MIDDLE);
+          sprite->Draw(x, y, Layer::MIDDLE, scale, -speed->Angle());
     
       // tail->Draw(Layer::LOWER, 1.0f);
     else
