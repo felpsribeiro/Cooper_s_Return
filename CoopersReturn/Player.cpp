@@ -181,15 +181,14 @@ void Player::Update()
 void Player::Draw()
 {
     if(!CoopersReturn::lost)
-          if (CoopersReturn::state == INIT)
-      {
+        if (CoopersReturn::state == INIT)
+        {
           sprite->Draw(x, y);
           anim->Draw(x - 53.0f, y, Layer::UPPER);
-      }
-      else
+        }
+        else
           sprite->Draw(x, y, Layer::MIDDLE);
-      {
-      }
+    
       // tail->Draw(Layer::LOWER, 1.0f);
     else
         anim_exp->Draw(x, y, Layer::FRONT);
