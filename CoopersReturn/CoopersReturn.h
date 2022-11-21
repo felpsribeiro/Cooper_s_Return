@@ -10,14 +10,19 @@
 #include "Background.h"
 #include "Player.h"
 #include "Obstacle.h"
+#include "BlackHole.h"
 
 // ------------------------------------------------------------------------------
 
-enum ObjectIds { PLAYER, MISSILE, COMET, ASTEROID, METEOROID };
+enum ObjectIds { PLAYER, MISSILE, COMET, ASTEROID, METEOROID, HOLE };
 
 // ------------------------------------------------------------------------------
 
 enum SoundIds { THEME, START, FIRE, EXPLODE, HITWALL };
+
+// ------------------------------------------------------------------------------
+
+enum GameState { INIT, PLAY, FINALIZE };
 
 // ------------------------------------------------------------------------------
 
@@ -33,8 +38,9 @@ public:
     static Player * player;         // nave controlada pela jogador
     static Audio * audio;           // sitema de �udio
     static Scene * scene;           // cena do jogo
-    static bool active;             // jogo iniciou
+    static uint state;             // jogo iniciou
     static Timer timer;            // medidor de tempo
+    static void Restart();
 
     void Init();                    // inicializa��o
     void Update();                  // atualiza��o
