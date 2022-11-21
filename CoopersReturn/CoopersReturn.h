@@ -19,7 +19,7 @@ enum ObjectIds { PLAYER, MISSILE, COMET, ASTEROID, METEOROID, HOLE };
 
 // ------------------------------------------------------------------------------
 
-enum SoundIds { THEME, START, FIRE, EXPLODE, HITWALL };
+enum SoundIds { INTRO, END, START, FIRE, EXPLODE, HITWALL };
 
 // ------------------------------------------------------------------------------
 
@@ -30,7 +30,9 @@ enum GameState { INIT, PLAY, FINALIZE };
 class CoopersReturn : public Game
 {
 private:
-    Background * backg = nullptr;   // pano de fundo
+    Background * backg1 = nullptr;   // pano de fundo 1
+    Background * backg2 = nullptr;   // pano de fundo 2
+    float backVelocity = -100;
     bool viewBBox = false;          // visualiza��o das bouding boxes
     Obstacle* obstacle;
     Timer auxTimer;
@@ -44,6 +46,7 @@ public:
     static Controller * gamepad;    // controlador de jogo
     static bool ctrl;
     static void Restart();
+    static bool finalMusic;
 
 
     void Init();                    // inicializa��o

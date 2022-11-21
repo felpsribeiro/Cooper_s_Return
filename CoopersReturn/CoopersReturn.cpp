@@ -13,6 +13,7 @@ uint     CoopersReturn::state;
 Timer    CoopersReturn::timer;
 Controller * CoopersReturn::gamepad = new Controller();
 bool         CoopersReturn::ctrl = false;
+bool   CoopersReturn::finalMusic = false;
 
 // ------------------------------------------------------------------------------
 
@@ -20,18 +21,17 @@ void CoopersReturn::Init()
 {
     // cria sistema de �udio
     audio = new Audio();
-    audio->Add(THEME, "Resources/Theme.wav");
-    audio->Add(FIRE, "Resources/Fire.wav");
-    audio->Add(HITWALL, "Resources/Hitwall.wav");
-    audio->Add(EXPLODE, "Resources/Explode.wav");
-    audio->Add(START, "Resources/Start.wav");
+    audio->Add(INTRO, "Resources/Dust.wav");
+    audio->Add(END, "Resources/FirstStep.wav");
 
-    // ajusta volumes
-    audio->Volume(FIRE, 0.2f);
-    audio->Volume(START, 0.8f);
+    audio->Volume(INTRO, 1.0f);
+    audio->Volume(END, 1.0f);
+    
+    audio->Play(INTRO, true);
 
     // carrega/incializa objetos
-    backg   = new Background("Resources/Space.jpg");
+    backg1  = new Background("Resources/Space.jpg", window->CenterX(), window->CenterY());
+    //backg2  = new Background("Resources/Space.jpg", window->CenterX() + backg1->Width(), window->CenterY());
     player  = new Player();
     scene   = new Scene();
 
@@ -58,17 +58,12 @@ void CoopersReturn::Init()
     viewport.bottom = viewport.top + window->Height();
 
     ctrl = gamepad->XboxInitialize();
-
 }
 
 // ------------------------------------------------------------------------------
 
 void CoopersReturn::Update()
 {
-    //// toca m�sica do jogo
-    //CoopersReturn::audio->Play(THEME, true);
-    //CoopersReturn::viewHUD = true;
-
     // sai com o pressionamento da tecla ESC
     if (window->KeyDown(VK_ESCAPE))
         window->Close();
@@ -120,6 +115,18 @@ void CoopersReturn::Update()
         viewport.bottom = game->Height();
     }
 
+    //// ---------------------------------
+    //// altera a posição da tela de fundo
+    //// ---------------------------------
+
+    //backg1->TranslateX(backVelocity * gameTime);
+    //if (backg1->Right() < 0)
+    //    backg1->TranslateX(window->CenterX() + backg1->Width());
+
+    //backg2->TranslateX(backVelocity * gameTime);
+    //if (backg2->Right() < 0)
+    //    backg2->TranslateX(window->CenterX() + backg2->Width());
+
     // ------------------------------------------------
     // gerencia elementos de acordo com o tempo de jogo
     // ------------------------------------------------
@@ -152,11 +159,23 @@ void CoopersReturn::Update()
                 auxTimer.Reset();
             }
         }
-        else if (scene->Size() == 1)
+        else if (state != FINALIZE)
         {
+            state = FINALIZE;
             BlackHole* hole = new BlackHole();
-            scene->Add(hole, MOVING);
+            scene->Add(hole, STATIC);
         }
+    }
+
+    // ------------------------------------------------
+    // gerencia mísica de acordo com o tempo de jogo
+    // ------------------------------------------------
+    if (state == PLAY && timer.Elapsed(128.0f) && !finalMusic)
+    {
+        finalMusic = true;
+
+        audio->Stop(INTRO);
+        audio->Play(END, false);
     }
 } 
 
@@ -165,7 +184,8 @@ void CoopersReturn::Update()
 void CoopersReturn::Draw()
 {
     // desenha pano de fundo
-    backg->Draw(viewport);
+    backg1->Draw(viewport);
+    //backg2->Draw(viewport);
 
     // desenha a cena
     scene->Draw();
@@ -181,7 +201,8 @@ void CoopersReturn::Finalize()
 {
     delete audio;
     delete scene;
-    delete backg;
+    delete backg1;
+    delete backg2;
     delete gamepad;
 }
 
@@ -191,11 +212,18 @@ void CoopersReturn::Restart()
 {
     state = INIT;
 
+    scene->Delete(player, MOVING);
+
     player = new Player();
 
     // adiciona objetos na cena
     scene->Add(new Menu(), STATIC);
     scene->Add(player, MOVING);
+
+    finalMusic = false;
+    audio->Stop(END);
+    audio->Stop(INTRO);
+    audio->Play(INTRO);
 }
 
 

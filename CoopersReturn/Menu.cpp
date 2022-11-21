@@ -23,8 +23,6 @@ Menu::Menu()
     font->Spacing("Resources/Tahoma14.dat");
     bold = new Font("Resources/Tahoma14b.png");
     bold->Spacing("Resources/Tahoma14b.dat");
-
-    CoopersReturn::audio->Play(START);
 }
 
 // ------------------------------------------------------------------------------
