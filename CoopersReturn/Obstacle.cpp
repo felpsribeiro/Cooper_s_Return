@@ -109,7 +109,7 @@ Obstacle::~Obstacle()
 
 // -------------------------------------------------------------------------------
 
-void Obstacle::Generete(uint type, float m)
+void Obstacle::Generate(uint type, float m)
 {
     Sprite* sprite = nullptr;
     Geometry* bb = nullptr;
@@ -126,13 +126,59 @@ void Obstacle::Generete(uint type, float m)
     case ASTEROID:
     {
         sprite = asteroid;
-        bb = new Circle(20.0f);
+        Point vertex[20] = {
+            Point(-3, -39),
+            Point(- 13, -39),
+            Point(- 20, -33),
+            Point(- 24, -29),
+            Point(- 29, -18),
+            Point(- 29, 12),
+            Point(- 24, 23),
+            Point(- 15, 32),
+            Point(- 11, 37),
+            Point(- 5, 40),
+            Point(4, 40),
+            Point(11, 38),
+            Point(27, 14),
+            Point(27, 9),
+            Point(28, -2),
+            Point(29, -4),
+            Point(29, -15),
+            Point(12, -38),
+            Point(13, -40),
+            Point(3, -40),
+        };
+
+        bb = new Poly(vertex, 20);
+
         break;
     }
     case METEOROID:
     {
         sprite = meteoroid;
-        bb = new Circle(20.0f);
+
+        Point vertex[17] = {
+            Point(8, -24),
+            Point(2, -24),
+            Point(-2, -21),
+            Point(-6, -20),
+            Point(-11, -12),
+            Point(-11, -3),
+            Point(-9, 2),
+            Point(-7, 22),
+            Point(-3, 27),
+            Point(4, 26),
+            Point(13, 15),
+            Point(16, 6),
+            Point(15, -8),
+            Point(19, -12),
+            Point(19, -19),
+            Point(11, -25),
+            Point(9, -25)
+        };
+        
+        bb = new Poly(vertex, 17);
+
         break;
     }
     }

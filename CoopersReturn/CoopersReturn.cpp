@@ -126,7 +126,7 @@ void CoopersReturn::Update()
     {
         if (auxTimer.Elapsed(3.0f))
         {
-            obstacle->Generete(ASTEROID, 50.0f);
+            obstacle->Generate(ASTEROID, 50.0f);
             auxTimer.Reset();
         }
     }
@@ -134,8 +134,8 @@ void CoopersReturn::Update()
     {
         if (auxTimer.Elapsed(3.0f))
         {
-            obstacle->Generete(ASTEROID, 50.0f);
-            obstacle->Generete(METEOROID, 30.0f);
+            obstacle->Generate(ASTEROID, 50.0f);
+            obstacle->Generate(METEOROID, 30.0f);
             auxTimer.Reset();
         }
     }
@@ -143,10 +143,10 @@ void CoopersReturn::Update()
     {
         if (auxTimer.Elapsed(3.0f))
         {
-            //obstacle->Generete(ASTEROID, 30.0f);
-            obstacle->Generete(ASTEROID, 50.0f);
-            obstacle->Generete(METEOROID, 30.0f);
-            obstacle->Generete(COMET, 200.0f);
+            //obstacle->Generate(ASTEROID, 30.0f);
+            obstacle->Generate(ASTEROID, 50.0f);
+            obstacle->Generate(METEOROID, 30.0f);
+            obstacle->Generate(COMET, 200.0f);
             auxTimer.Reset();
         }
     }
