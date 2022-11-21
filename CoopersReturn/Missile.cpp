@@ -25,7 +25,7 @@ Missile::Missile()
     MoveTo(player->X() + 35 * cos(speed.Radians()), 
             player->Y() - 35 * sin(speed.Radians()));
     
-    RotateTo(-player->speed->Angle() + 90.0f);
+    RotateTo(-player->speed->Angle() + 180.0f);
 
     // define tipo
     type = MISSILE;
@@ -46,7 +46,7 @@ void Missile::Update()
     Translate(speed.XComponent() * 90.0f * gameTime, -speed.YComponent() * 90.0f * gameTime);
 
     // remove m�ssil da cena se ele sair da �rea de jogo
-    if (x > game->Width() - 50 || x < 50 || y > game->Height() - 50 || y < 50)
+    if (x > game->Width() || x < 0 || y > game->Height() || y < 0)
     {
         // volume do som de destrui��o depende da dist�ncia para o jogador
         float distance = Point::Distance(Point(x, y), Point(player->X(), player->Y()));
