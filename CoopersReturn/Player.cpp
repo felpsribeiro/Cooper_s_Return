@@ -29,6 +29,10 @@ Player::Player()
     type = PLAYER;
     engine = new TileSet("Resources/Propellant.png", 50, 32, 1, 8);
     anim = new Animation(engine, 0.120f, true);
+
+    explosion = new TileSet("Resources/explosion.png", 240, 240, 8, 46);
+    anim_exp = new Animation(explosion, 0.02f, false);
+
     speed = new Vector(0.0f, 0.0f);
 
     //// configura��o do gerador de part�culas
@@ -193,6 +197,8 @@ void Player::Update()
         {
             anim->NextFrame();
         }
+    else
+        anim_exp->NextFrame();
 }
 
 // ---------------------------------------------------------------------------------
@@ -210,6 +216,8 @@ void Player::Draw()
             anim->Draw(x - 53.0f, y, Layer::FRONT);
         }
         // tail->Draw(Layer::LOWER, 1.0f);
+    else
+        anim_exp->Draw(x, y, Layer::FRONT);
 }
 
 // -------------------------------------------------------------------------------

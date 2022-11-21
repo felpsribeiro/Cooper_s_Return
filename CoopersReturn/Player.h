@@ -21,6 +21,10 @@ private:
     Animation * anim;                   // animação do motor
     float scale = 1.0f;
 
+    TileSet* explosion;                   // explosçao
+    Animation* anim_exp;                   // animação da explosão
+
+
 public:
     Vector * speed;                     // velocidade e dire��o
 
