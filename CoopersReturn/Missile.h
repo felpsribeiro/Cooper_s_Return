@@ -1,6 +1,6 @@
 
-#ifndef _GEOWARS_MISSILE_H_
-#define _GEOWARS_MISSILE_H_
+#ifndef _COOPER_MISSILE_H_
+#define _COOPER_MISSILE_H_
 
 // --------------------------------------------------------------------------------
 
