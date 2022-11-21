@@ -82,7 +82,8 @@ void CoopersReturn::Update()
         viewBBox = !viewBBox;
 
     // ativa ou desativa o heads up display
-    if (window->KeyPress(VK_RETURN))
+    gamepad->XboxUpdateState();
+    if (window->KeyPress(VK_RETURN) || gamepad->XboxButton(ButtonStart))
     {
         active = true;
         auxTimer.Start();
