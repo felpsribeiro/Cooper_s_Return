@@ -1,4 +1,3 @@
-
 #ifndef _COOPER_MISSILE_H_
 #define _COOPER_MISSILE_H_
 

@@ -111,7 +111,6 @@ void Player::Update()
                 {
                     Move(Vector(shot_ang, 0.0f));
                     
-                    CoopersReturn::audio->Play(FIRE);
                     CoopersReturn::scene->Add(new Missile(), STATIC);
                 }
             }
@@ -144,19 +143,12 @@ void Player::Update()
                 // dispara m�ssil
                 if (window->KeyPress(VK_SPACE))
                 {
-                    CoopersReturn::audio->Play(FIRE);
                     CoopersReturn::scene->Add(new Missile(), STATIC);
                 }
         }
 
             // movimenta objeto pelo seu vetor velocidade
             Translate(speed->XComponent() * 50.0f * gameTime, -speed->YComponent() * 50.0f * gameTime);
-
-
-            //// atualiza calda do jogador
-            // tail->Config().angle = speed->Angle() + 180;
-            // tail->Generate(x - 10 * cos(speed->Radians()), y + 10 * sin(speed->Radians()));
-            // tail->Update(gameTime);
 
             // restringe a �rea do jogo
             if (x < 50)
@@ -183,12 +175,11 @@ void Player::Draw()
     if(!CoopersReturn::lost)
         if (CoopersReturn::state == INIT)
         {
-            sprite->Draw(x, y);
-            anim->Draw(x - 53.0f, y, Layer::UPPER);
+          sprite->Draw(x, y);
+          anim->Draw(x - 53.0f, y, Layer::UPPER);
         }
         else
-            sprite->Draw(x, y, Layer::MIDDLE);
-      // tail->Draw(Layer::LOWER, 1.0f);
+          sprite->Draw(x, y, Layer::MIDDLE, scale, -speed->Angle());
     else
         anim_exp->Draw(x, y, Layer::FRONT);
 
