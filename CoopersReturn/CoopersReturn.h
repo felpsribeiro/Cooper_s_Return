@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include "Background.h"
 #include "Player.h"
+#include "Controller.h"
 #include "Obstacle.h"
 #include "BlackHole.h"
 
@@ -40,7 +41,10 @@ public:
     static Scene * scene;           // cena do jogo
     static uint state;             // jogo iniciou
     static Timer timer;            // medidor de tempo
+    static Controller * gamepad;    // controlador de jogo
+    static bool ctrl;
     static void Restart();
+
 
     void Init();                    // inicializa��o
     void Update();                  // atualiza��o

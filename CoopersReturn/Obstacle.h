@@ -56,7 +56,7 @@ public:
     Obstacle();
     ~Obstacle();
 
-    void Generete(uint type, float m);
+    void Generate(uint type, float m);
 };
 
 

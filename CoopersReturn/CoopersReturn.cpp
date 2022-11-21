@@ -11,6 +11,8 @@ Audio  * CoopersReturn::audio   = nullptr;
 Scene  * CoopersReturn::scene   = nullptr;
 uint     CoopersReturn::state;
 Timer    CoopersReturn::timer;
+Controller * CoopersReturn::gamepad = new Controller();
+bool         CoopersReturn::ctrl = false;
 
 // ------------------------------------------------------------------------------
 
@@ -54,6 +56,9 @@ void CoopersReturn::Init()
     viewport.right = viewport.left + window->Width();
     viewport.top = 0.0f + dify;
     viewport.bottom = viewport.top + window->Height();
+
+    ctrl = gamepad->XboxInitialize();
+
 }
 
 // ------------------------------------------------------------------------------
@@ -123,7 +128,7 @@ void CoopersReturn::Update()
         {
             if (auxTimer.Elapsed(4.0f))
             {
-                obstacle->Generete(ASTEROID, 50.0f);
+                obstacle->Generate(ASTEROID, 50.0f);
                 auxTimer.Reset();
             }
         }
@@ -131,8 +136,8 @@ void CoopersReturn::Update()
         {
             if (auxTimer.Elapsed(3.0f))
             {
-                obstacle->Generete(ASTEROID, 50.0f);
-                obstacle->Generete(METEOROID, 30.0f);
+                obstacle->Generate(ASTEROID, 50.0f);
+                obstacle->Generate(METEOROID, 30.0f);
                 auxTimer.Reset();
             }
         }
@@ -141,9 +146,9 @@ void CoopersReturn::Update()
             if (auxTimer.Elapsed(3.0f))
             {
                 //obstacle->Generete(ASTEROID, 30.0f);
-                obstacle->Generete(ASTEROID, 50.0f);
-                obstacle->Generete(METEOROID, 30.0f);
-                obstacle->Generete(COMET, 200.0f);
+                obstacle->Generate(ASTEROID, 50.0f);
+                obstacle->Generate(METEOROID, 30.0f);
+                obstacle->Generate(COMET, 200.0f);
                 auxTimer.Reset();
             }
         }
@@ -177,6 +182,7 @@ void CoopersReturn::Finalize()
     delete audio;
     delete scene;
     delete backg;
+    delete gamepad;
 }
 
 // ------------------------------------------------------------------------------
