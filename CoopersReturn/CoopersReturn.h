@@ -43,8 +43,8 @@ public:
     static Timer timer;            // medidor de tempo
     static Controller * gamepad;    // controlador de jogo
     static bool ctrl;
+    static bool lost;
     static void Restart();
-
 
     void Init();                    // inicializa��o
     void Update();                  // atualiza��o

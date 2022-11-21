@@ -13,6 +13,7 @@ uint     CoopersReturn::state;
 Timer    CoopersReturn::timer;
 Controller * CoopersReturn::gamepad = new Controller();
 bool         CoopersReturn::ctrl = false;
+bool         CoopersReturn::lost = false;
 
 // ------------------------------------------------------------------------------
 
@@ -58,7 +59,7 @@ void CoopersReturn::Init()
     viewport.bottom = viewport.top + window->Height();
 
     ctrl = gamepad->XboxInitialize();
-
+    lost = false;
 }
 
 // ------------------------------------------------------------------------------
@@ -82,7 +83,8 @@ void CoopersReturn::Update()
         viewBBox = !viewBBox;
 
     // ativa ou desativa o heads up display
-    if (window->KeyPress(VK_RETURN))
+    gamepad->XboxUpdateState();
+    if (window->KeyPress(VK_RETURN) || gamepad->XboxButton(ButtonStart))
     {
         state = PLAY;
         timer.Reset();
