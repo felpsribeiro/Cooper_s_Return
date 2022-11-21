@@ -29,6 +29,10 @@ Player::Player()
     type = PLAYER;
     engine = new TileSet("Resources/Propellant.png", 50, 32, 1, 8);
     anim = new Animation(engine, 0.120f, true);
+
+    explosion = new TileSet("Resources/explosion.png", 240, 240, 8, 46);
+    anim_exp = new Animation(explosion, 0.02f, false);
+
     speed = new Vector(0.0f, 0.0f);
 
     speed = new Vector(0.0f, 0.0f);
@@ -66,7 +70,8 @@ void Player::Update()
     {
         // magnitude do vetor acelera��o
         float accel = 30.0f * gameTime;
-        
+
+    
         if (CoopersReturn::ctrl) {
             CoopersReturn::gamepad->XboxUpdateState();
 
@@ -96,14 +101,14 @@ void Player::Update()
 
             // angulo de tiro
             float shot_ang = Line::Angle(Point(0, 0), Point(CoopersReturn::gamepad->XboxAnalog(ThumbLX) / 25.0f, -1.0f * (CoopersReturn::gamepad->XboxAnalog(ThumbLY) / 25.0f)));
-            
+        
             bool x = (CoopersReturn::gamepad->XboxAnalog(ThumbLX) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLX) < -100);
             bool y = (CoopersReturn::gamepad->XboxAnalog(ThumbLY) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLY) < -100);
 
             if (x || y)
             {
                 Move(Vector(shot_ang, 0.0f));
-                CoopersReturn::audio->Play(FIRE);
+                
                 CoopersReturn::scene->Add(new Missile(), STATIC);
             }
         }
@@ -136,19 +141,12 @@ void Player::Update()
             // dispara m�ssil
             if (window->KeyPress(VK_SPACE))
             {
-                CoopersReturn::audio->Play(FIRE);
                 CoopersReturn::scene->Add(new Missile(), STATIC);
             }
-    }
+        }
 
         // movimenta objeto pelo seu vetor velocidade
         Translate(speed->XComponent() * 50.0f * gameTime, -speed->YComponent() * 50.0f * gameTime);
-
-
-        //// atualiza calda do jogador
-        // tail->Config().angle = speed->Angle() + 180;
-        // tail->Generate(x - 10 * cos(speed->Radians()), y + 10 * sin(speed->Radians()));
-        // tail->Update(gameTime);
 
         // restringe a �rea do jogo
         if (x < 50)
@@ -159,27 +157,36 @@ void Player::Update()
             MoveTo(game->Width() - 50, y);
         if (y > game->Height() - 50)
             MoveTo(x, game->Height() - 50);
+        
+        if (CoopersReturn::lost)
+            anim_exp->NextFrame();
     }
     else
-    {
         anim->NextFrame();
-    }
 }
 
 // ---------------------------------------------------------------------------------
 
 void Player::Draw()
 {
-    if (CoopersReturn::state == INIT)
-    {
-        sprite->Draw(x, y);
-        anim->Draw(x - 53.0f, y, Layer::UPPER);
-    }
+    if(!CoopersReturn::lost)
+        if (CoopersReturn::state == INIT)
+        {
+          sprite->Draw(x, y);
+          anim->Draw(x - 53.0f, y, Layer::UPPER);
+        }
+        else
+          sprite->Draw(x, y, Layer::MIDDLE, scale, -speed->Angle());
     else
-        sprite->Draw(x, y, Layer::MIDDLE);
-    {
-    }
-    // tail->Draw(Layer::LOWER, 1.0f);
+        anim_exp->Draw(x, y, Layer::FRONT);
+
 }
 
 // -------------------------------------------------------------------------------
+
+void Player::OnCollision(Object* obj) {
+    //COMET, ASTEROID, METEOROID
+    if (obj->Type() == COMET || obj->Type() == ASTEROID || obj->Type() == METEOROID) {
+        CoopersReturn::lost = true;
+    }
+}

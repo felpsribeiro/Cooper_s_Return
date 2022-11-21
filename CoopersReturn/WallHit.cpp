@@ -9,25 +9,25 @@ WallHit::WallHit(float pX, float pY)
 {
     // calcula �ngulo base e ajusta coordenadas da explos�o
     float base;
-    if (pX < 50)
+    if (pX < 0)
     {
         base = 0.0f;
-        pX = 50;
+        pX = 0;
     }
-    else if (pX > game->Width() - 50)
+    else if (pX > game->Width())
     {
         base = 180.0f;
-        pX = game->Width() - 50;
+        pX = game->Width();
     }
-    else if (pY < 50)
+    else if (pY < 0)
     {
         base = 270.0f;
-        pY = 50;
+        pY = 0;
     }
     else
     {
         base = 90.0f;
-        pY = game->Height() - 50;
+        pY = game->Height();
     }
 
     // n�mero aleat�rio entre 0 e 1
