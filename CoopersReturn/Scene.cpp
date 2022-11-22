@@ -88,6 +88,17 @@ void Scene::Delete()
 
 // ---------------------------------------------------------------------------------
 
+void Scene::DeleteAll()
+{
+    for (it = statics.begin(); it != statics.end(); ++it)
+        Delete((*it), STATIC);
+
+    for (it = moving.begin(); it != moving.end(); ++it)
+        Delete((*it), MOVING);
+}
+
+// ---------------------------------------------------------------------------------
+
 uint Scene::Size()
 {
     return uint(moving.size() + statics.size());
