@@ -19,10 +19,8 @@ Menu::Menu()
     logo = new Sprite("Resources/Logo.png");
     panel = new Sprite("Resources/Panel.png");
 
-    font = new Font("Resources/Tahoma14.png");
-    font->Spacing("Resources/Tahoma14.dat");
-    bold = new Font("Resources/Tahoma14b.png");
-    bold->Spacing("Resources/Tahoma14b.dat");
+    font = new Font("Resources/SimSun16.png");
+    font->Spacing("Resources/SimSun16.dat");
 }
 
 // ------------------------------------------------------------------------------
@@ -32,7 +30,6 @@ Menu::~Menu()
     delete logo;
     delete panel;
     delete font;
-    delete bold;
 }
 
 // -------------------------------------------------------------------------------
@@ -43,34 +40,41 @@ void Menu::Update()
     text2.str("");
     text3.str("");
 
-    if (CoopersReturn::state == INIT)
+    switch (CoopersReturn::state)
     {
-        text1 << "Precione Enter para iniciar o jogo...";
+    case INIT:
+        text1 << "Precione Enter para iniciar o jogo..."; break;
+    case MESG:
+    case PLAY:
+    {
+        if (!CoopersReturn::timer.Elapsed(5.0f))
+        {
+            text1 << "Cooper precisa voltar para o buraco";
+            text2 << "negro Gargantua... sua filha Murphy";
+            text3 << "espera-o na terra.";
+        }
+        else if (!CoopersReturn::timer.Elapsed(8.0f))
+        {
+            text1 << "O motor principal da nave Ranger falhou";
+            text2 << "devido uma onda gravitacional intensa.";
+        }
+        else if (!CoopersReturn::timer.Elapsed(11.0f))
+        {
+            text1 << "Por sorte, a nave ja entrou no campo";
+            text2 << "gravitacional do buraco negro Gargantua";
+            text3 << "e esta sendo atraido por ele.";
+        }
+        else if (!CoopersReturn::timer.Elapsed(14.0f))
+        {
+            text1 << "Ajude Cooper a guiar a nave ate o ";
+            text2 << "Gargantua. desviando dos objetos que";
+            text3 << "aparecerem pelo caminho.";
+        }
+        else if (!CoopersReturn::timer.Elapsed(20.0f))
+        {
+            CoopersReturn::scene->Delete();
+        }
     }
-    else if (CoopersReturn::state == PLAY)
-    {
-       if (!CoopersReturn::timer.Elapsed(5.0f))
-       {
-           text1 << "Cooper precisa voltar para o buraco ";
-           text2 << "negro Gargantua... sua filha Murphy o";
-           text3 << "está esperando na terra.";
-       }
-       else if (!CoopersReturn::timer.Elapsed(10.0f))
-       {
-           text1 << "O motor principal da nave Ranger falhou devido a uma onda gravitacional intensa.";
-           text2 << "Por sorte, a nave já entrou no campo gravitacional do buraco negro Gargantua e";
-           text3 << "esta sendo atraído por ele.";
-       }
-       else if (!CoopersReturn::timer.Elapsed(15.0f))
-       {
-           text1 << "Ajude Cooper a guiar a nave até o Gargantua, desviando dos objetos que aparecerem";
-           text2 << "pelo caminho. Lembre-se da Lei de Murphy: \"Qualquer coisa que possa ocorrer mal,";
-           text3 << "ocorrerá mal, no pior momento possível\"";
-       }
-       else if (!CoopersReturn::timer.Elapsed(20.0f))
-       {
-           CoopersReturn::scene->Delete();
-       }
     }
 }
 
@@ -82,9 +86,9 @@ void Menu::Draw()
     panel->Draw(game->viewport.left + window->CenterX() , game->viewport.bottom - 63.0f, Layer::UPPER);
 
     // desenha texto
-    bold->Draw(500, 700, text1.str(), textColor);
-    bold->Draw(500, 720, text2.str(), textColor);
-    bold->Draw(500, 740, text3.str(), textColor);
+    font->Draw(500, 700, text1.str(), textColor);
+    font->Draw(500, 720, text2.str(), textColor);
+    font->Draw(500, 740, text3.str(), textColor);
 }
 
 // -------------------------------------------------------------------------------

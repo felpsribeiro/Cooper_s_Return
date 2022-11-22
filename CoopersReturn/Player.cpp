@@ -70,6 +70,7 @@ void Player::Update()
     switch (CoopersReturn::state)
     {
     case INIT:
+    case MESG:
     {
         animEng->NextFrame();
         break;
@@ -187,6 +188,7 @@ void Player::Draw()
         break;
     }
     case INIT:
+    case MESG:
     {
        sprite->Draw(x, y);
        animEng->Draw(x - 53.0f, y, Layer::UPPER);

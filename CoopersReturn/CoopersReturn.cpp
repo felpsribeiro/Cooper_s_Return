@@ -22,11 +22,14 @@ void CoopersReturn::Init()
     audio = new Audio();
     audio->Add(INTRO, "Resources/Dust.wav");
     audio->Add(END, "Resources/FirstStep.wav");
-
     audio->Volume(INTRO, 1.0f);
     audio->Volume(END, 1.0f);
-    
     audio->Play(INTRO, true);
+
+    font1 = new Font("Resources/SimSun16.png");
+    font1->Spacing("Resources/SimSun16.dat");
+    font2 = new Font("Resources/Roman16.png");
+    font2->Spacing("Resources/Roman16.dat");
 
     // carrega/incializa objetos
     backg1  = new Background("Resources/Space.jpg", window->CenterX(), window->CenterY());
@@ -79,7 +82,7 @@ void CoopersReturn::Update()
     gamepad->XboxUpdateState();
     if ((window->KeyPress(VK_RETURN) || gamepad->XboxButton(ButtonStart)) && state == INIT)
     {
-        state = PLAY;
+        state = MESG;
         timer.Reset();
         auxTimer.Start();
     }
@@ -132,6 +135,14 @@ void CoopersReturn::Update()
     // ------------------------------------------------
     switch (state)
     {
+    case MESG:
+    {
+        if (timer.Elapsed(5.0f)) // primeira etapa do jogo -> 0:00 à 0:59
+        {
+            state = PLAY;
+        }
+        break;
+    };
     case PLAY:
     case CLIMAX:
     {
@@ -190,7 +201,7 @@ void CoopersReturn::Update()
     }
     case RESTART:
     {
-        if (timer.Elapsed(5.0f))
+        if (timer.Elapsed(7.0f))
         {
             state = INIT;
             
@@ -218,10 +229,19 @@ void CoopersReturn::Draw()
     // desenha pano de fundo
     if (state == RESTART)
     {
-        //backg2->Draw(viewport);
+        font1->Draw(window->CenterX() - 150.0f, window->CenterY(), "Lembresse da Lei de Murphy:", textColor);
+        font1->Draw(window->CenterX() - 150.0f, window->CenterY() + 20.0f, "Qualquer coisa que possa ocorrer mal,", textColor);
+        font1->Draw(window->CenterX() - 150.0f, window->CenterY() + 40.0f, "ocorrera mal, no pior momento possivel.", textColor);
     }
     else
     {
+        if (state == PLAY || state == CLIMAX)
+        {
+            text.str("");
+            text << "Tempo para colisao com Gargantua: " << int(190.0f - timer.Elapsed()) << " s";
+            font1->Draw(50.0f, 20.0f, text.str(), textColor, Layer::UPPER);
+        }
+        
         backg1->Draw(viewport);
 
         // desenha a cena

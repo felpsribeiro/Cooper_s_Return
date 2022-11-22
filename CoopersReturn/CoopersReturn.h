@@ -12,6 +12,9 @@
 #include "Controller.h"
 #include "Obstacle.h"
 #include "BlackHole.h"
+#include "Font.h" 
+#include <sstream>
+using std::stringstream;
 
 // ------------------------------------------------------------------------------
 
@@ -23,7 +26,7 @@ enum SoundIds { INTRO, END };
 
 // ------------------------------------------------------------------------------
 
-enum GameState { INIT, PLAY, CLIMAX, FINALIZE, LOST, RESTART };
+enum GameState { INIT, MESG, PLAY, CLIMAX, FINALIZE, LOST, RESTART };
 
 // ------------------------------------------------------------------------------
 
@@ -36,6 +39,10 @@ private:
     bool viewBBox = false;          // visualiza��o das bouding boxes
     Obstacle* obstacle;
     Timer auxTimer;
+    Font* font1 = nullptr;
+    Font* font2 = nullptr;
+    stringstream text;                 // texto tempor�rio
+    Color textColor{ 1.0f, 1.0f, 1.0f, 1.0f };
 
 public:
     static Player * player;         // nave controlada pela jogador

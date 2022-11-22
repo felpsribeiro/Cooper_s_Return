@@ -19,13 +19,12 @@ private:
     Sprite * panel;         // painel do jogo
 
     Font* font = nullptr;              // fonte para exibi��o normal
-    Font* bold = nullptr;              // fonte para exibi��o negrito
     stringstream text1;                 // texto tempor�rio
     stringstream text2;                 // texto tempor�rio
     stringstream text3;                 // texto tempor�rio
 
     // define cor do texto
-    Color textColor{ 0.7f, 0.7f, 0.7f, 1.0f };
+    Color textColor{ 1.0f, 1.0f, 1.0f, 1.0f };
 
 public:
     Menu();                // construtor
