@@ -53,7 +53,7 @@ void Missile::Update()
         float level = (MaxDistance - distance) / MaxDistance * BaseVolume;
 
         // adiciona explos�o na cena
-        CoopersReturn::scene->Add(new WallHit(x,y), STATIC);
+        //CoopersReturn::scene->Add(new WallHit(x,y), STATIC);
 
         // remove m�ssil da cena
         CoopersReturn::scene->Delete();
