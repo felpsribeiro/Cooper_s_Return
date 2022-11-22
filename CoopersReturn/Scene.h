@@ -85,6 +85,7 @@ public:
     void Remove();                              // remove objeto sendo processado na cena sem deletar
     void Delete(Object * obj, int type);        // deleta objeto da lista indicada (STATIC ou MOVING)
     void Delete();                              // deleta o objeto cujo Update/Draw está sendo executado
+    void DeleteAll();
     uint Size();                                // retorna a quantidade de objetos na cena
 
     void Begin();                               // inicia percurso na lista de objetos
