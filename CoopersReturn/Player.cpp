@@ -78,6 +78,8 @@ void Player::Update()
     case EXPL:
     {
         animExp->NextFrame();
+        if (animExp->Inactive())
+            CoopersReturn::state = LOST;
         break;
     }
     case PLAY:
