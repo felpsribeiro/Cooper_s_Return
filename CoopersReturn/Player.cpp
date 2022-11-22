@@ -4,6 +4,7 @@
 #include "CoopersReturn.h"
 
 // -------------------------------------------------------------------------------
+const Vector gravity = Vector(0.0f, 23.0f);
 
 Player::Player()
 {
@@ -52,7 +53,9 @@ Player::~Player()
 
 void Player::Move(Vector&& v, bool freio = false)
 {
+    v.Add(gravity);
     speed->Add(v);
+
     if(!freio) BBox()->RotateTo(360.0f - v.Angle());
 
     // limita velocidade m�xima
@@ -119,7 +122,6 @@ void Player::Update()
             if (x || y)
             {
                 Move(Vector(shot_ang, 0.0f));
-
                 CoopersReturn::scene->Add(new Missile(), STATIC);
             }
         }
