@@ -189,7 +189,7 @@ void Player::Draw()
 {
     switch (CoopersReturn::state)
     {
-    case LOST:
+    case EXPL:
     {
         animExp->Draw(x, y, Layer::FRONT);
         break;
@@ -218,7 +218,7 @@ void Player::Draw()
 void Player::OnCollision(Object* obj) {
     //COMET, ASTEROID, METEOROID
     if (obj->Type() == COMET || obj->Type() == ASTEROID || obj->Type() == METEOROID) {
-        CoopersReturn::state = LOST;
+        CoopersReturn::state = EXPL;
         CoopersReturn::timer.Reset();
     }
 }

@@ -179,9 +179,16 @@ void CoopersReturn::Update()
         break;
     }
     case EXPL:
+    {
+        if (timer.Elapsed(2.0f))
+        {
+            state = LOST;
+        }
+        break;
+    }
     case LOST:
     {
-        if (timer.Elapsed(3.0f))
+        if (timer.Elapsed(5.0f))
         {
             state = RESTART;
         }
