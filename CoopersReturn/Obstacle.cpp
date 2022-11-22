@@ -25,16 +25,16 @@ Body::Body(uint t, Sprite * s, Geometry* bb, float m, bool hasTail) : sprite(s),
         Generator emitter;
         emitter.imgFile = "Resources/Spark.png";    // arquivo de imagem
         emitter.angle = speed->Angle() + 180;       // �ngulo base do emissor
-        emitter.spread = 30;                        // espalhamento em graus
+        emitter.spread = 20;                        // espalhamento em graus
         emitter.lifetime = 2.5f;                    // tempo de vida em segundos
         emitter.frequency = 0.00001f;                // tempo entre gera��o de novas part�culas
         emitter.percentToDim = 0.7f;                // desaparece ap�s 60% da vida
         emitter.minSpeed = 50.0f;                   // velocidade m�nima das part�culas
         emitter.maxSpeed = 100.0f;                  // velocidade m�xima das part�culas
-        emitter.color.r = 0.0f;                     // componente Red da part�cula 
-        emitter.color.g = 0.0F;                      // componente Green da part�cula 
-        emitter.color.b = 1.0f;                     // componente Blue da part�cula 
-        emitter.color.a = 0.4f;                     // transpar�ncia da part�cula
+        emitter.color.r = 1.0f;                     // componente Red da part�cula 
+        emitter.color.g = 1.0F;                      // componente Green da part�cula 
+        emitter.color.b = 0.0f;                     // componente Blue da part�cula 
+        emitter.color.a = 0.7f;                     // transpar�ncia da part�cula
 
         // cria sistema de part�culas
         tail = new Particles(emitter);
