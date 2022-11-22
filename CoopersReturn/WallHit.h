@@ -14,24 +14,21 @@
 class WallHit : public Object
 {
 private:
-    Particles * sparks;                 // sistema de part�culas
+    TileSet* explosion;                   // explosão
+    Animation* animExp;                   // animação da explosão
     
 public:
     WallHit(float pX, float pY);        // construtor
     ~WallHit();                         // destrutor
 
-    int  Size();                        // quantidade de part�culas
     void Update();                      // atualiza��o
     void Draw();                        // desenho
 }; 
 
 // ---------------------------------------------------------------------------------
 
-inline int WallHit::Size()
-{ return sparks->Size(); }
-
 inline void WallHit::Draw()
-{ sparks->Draw(Layer::MIDDLE, 0.0f); }
+{  animExp->Draw(X(), Y(), Layer::FRONT); }
 
 // ---------------------------------------------------------------------------------
 

@@ -2,9 +2,9 @@
 #include "CoopersReturn.h"
 #include "Obstacle.h"
 #include "Random.h" 
+#include "WallHit.h"
 
 // ---------------------------------------------------------------------------------
-
 Body::Body(uint t, Sprite * s, Geometry* bb, float m, bool hasTail) : sprite(s), speed(new Vector(0, 2.0f))
 {
     BBox(bb);
@@ -53,8 +53,10 @@ Body::~Body()
 
 void Body::OnCollision(Object * obj)
 {
-    if (obj->Type() == MISSILE)
+    if (obj->Type() == MISSILE) {
+        CoopersReturn::scene->Add(new WallHit(X(), Y()), STATIC);
         CoopersReturn::scene->Delete(this, MOVING);
+    }
 }
 
 // -------------------------------------------------------------------------------

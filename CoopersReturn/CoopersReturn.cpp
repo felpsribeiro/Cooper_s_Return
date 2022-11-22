@@ -229,7 +229,7 @@ void CoopersReturn::Draw()
     // desenha pano de fundo
     if (state == RESTART)
     {
-        font1->Draw(window->CenterX() - 150.0f, window->CenterY(), "Lembresse da Lei de Murphy:", textColor);
+        font1->Draw(window->CenterX() - 150.0f, window->CenterY(), "Lembre-se da Lei de Murphy:", textColor);
         font1->Draw(window->CenterX() - 150.0f, window->CenterY() + 20.0f, "Qualquer coisa que possa ocorrer mal,", textColor);
         font1->Draw(window->CenterX() - 150.0f, window->CenterY() + 40.0f, "ocorrera mal, no pior momento possivel.", textColor);
     }
@@ -238,7 +238,7 @@ void CoopersReturn::Draw()
         if (state == PLAY || state == CLIMAX)
         {
             text.str("");
-            text << "Tempo para colisao com Gargantua: " << int(190.0f - timer.Elapsed()) << " s";
+            text << "Tempo para colisão com Gargantua: " << int(190.0f - timer.Elapsed()) << " s";
             font1->Draw(50.0f, 20.0f, text.str(), textColor, Layer::UPPER);
         }
         
