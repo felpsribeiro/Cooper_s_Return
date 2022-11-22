@@ -35,7 +35,7 @@ void BlackHole::Update()
     }
     else
     {
-        CoopersReturn::state == RESTART;
+        CoopersReturn::state = RESTART;
         CoopersReturn::timer.Reset();
     }
 
