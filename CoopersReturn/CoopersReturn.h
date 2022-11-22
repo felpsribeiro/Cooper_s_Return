@@ -26,7 +26,7 @@ enum SoundIds { INTRO, END };
 
 // ------------------------------------------------------------------------------
 
-enum GameState { INIT, MESG, PLAY, CLIMAX, FINALIZE, LOST, RESTART };
+enum GameState { INIT, MESG, PLAY, CLIMAX, FINALIZE, EXPL, LOST, RESTART };
 
 // ------------------------------------------------------------------------------
 

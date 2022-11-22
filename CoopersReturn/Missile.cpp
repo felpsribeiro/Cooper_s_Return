@@ -25,7 +25,7 @@ Missile::Missile()
     MoveTo(player->X() + 35 * cos(speed.Radians()), 
             player->Y() - 35 * sin(speed.Radians()));
     
-    RotateTo(-player->speed->Angle() + 180.0f);
+    RotateTo(-player->speed->Angle());
 
     // define tipo
     type = MISSILE;

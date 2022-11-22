@@ -7,8 +7,11 @@
 
 WallHit::WallHit(float pX, float pY)
 {
+    x = pX;
+    y = pY;
+
     explosion = new TileSet("Resources/exp_asteroide.png", 391.5f, 403.5f, 3, 6);
-    animExp = new Animation(explosion, 0.05f, true);
+    animExp = new Animation(explosion, 0.05f, false);
 }
 
 // ---------------------------------------------------------------------------------
@@ -26,8 +29,8 @@ void WallHit::Update()
     animExp->NextFrame();
 
     // remove da cena quando todas as part�culas est�o inativas
-    /*if (animExp->Inactive())
-        CoopersReturn::scene->Delete();*/
+    if (animExp->Inactive())
+        CoopersReturn::scene->Delete();
 }
 
 // -------------------------------------------------------------------------------

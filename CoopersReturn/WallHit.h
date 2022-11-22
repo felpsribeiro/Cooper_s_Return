@@ -16,6 +16,7 @@ class WallHit : public Object
 private:
     TileSet* explosion;                   // explosão
     Animation* animExp;                   // animação da explosão
+    float x, y;
     
 public:
     WallHit(float pX, float pY);        // construtor
@@ -28,7 +29,7 @@ public:
 // ---------------------------------------------------------------------------------
 
 inline void WallHit::Draw()
-{  animExp->Draw(X(), Y(), Layer::FRONT); }
+{  animExp->Draw(x, y, Layer::FRONT); }
 
 // ---------------------------------------------------------------------------------
 

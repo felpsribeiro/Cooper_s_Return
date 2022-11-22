@@ -43,11 +43,11 @@ void Menu::Update()
     switch (CoopersReturn::state)
     {
     case INIT:
-        text1 << "Precione Enter para iniciar o jogo..."; break;
+        text1 << "Precione Start para iniciar o jogo..."; break;
     case MESG:
     case PLAY:
     {
-        if (!CoopersReturn::timer.Elapsed(5.0f))
+        if (!CoopersReturn::timer.Elapsed(4.0f))
         {
             text1 << "Cooper precisa voltar para o buraco";
             text2 << "negro Gargantua... sua filha Murphy";

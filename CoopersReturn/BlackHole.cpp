@@ -39,7 +39,6 @@ void BlackHole::Update()
     else
     {
         CoopersReturn::state = RESTART;
-        CoopersReturn::timer.Reset();
     }
 
     anim->NextFrame();
@@ -56,7 +55,7 @@ void BlackHole::Draw()
        hole->Draw(x, y - 762.0f, Layer::FRONT);
 
     Color textColor{ 1.0f, 1.0f, 1.0f, 1.0f };
-    font->Draw(400.0f, 500.0f, "Conseguimos... Cooper conseguirá ver a sua filha novamente! Entre no Gargantua AGORA.", textColor, Layer::UPPER);
+    font->Draw(250.0f, 750.0f, "Conseguimos... Cooper conseguira ver a sua filha novamente! Entre no Gargantua AGORA.", textColor, Layer::UPPER);
 }
 
 // -------------------------------------------------------------------------------

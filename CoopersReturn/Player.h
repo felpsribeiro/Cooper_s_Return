@@ -19,6 +19,7 @@ private:
     TileSet * engine;                   // motor
     Animation * animEng;                   // animação do motor
     float scale = 1.0f;
+    bool atirando = false;
 
     TileSet* explosion;                   // explosçao
     Animation* animExp;                   // animação da explosão

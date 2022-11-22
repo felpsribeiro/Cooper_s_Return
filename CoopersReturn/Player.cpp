@@ -4,7 +4,7 @@
 #include "CoopersReturn.h"
 
 // -------------------------------------------------------------------------------
-const Vector gravity = Vector(45.0f, 2.0f);
+const Vector gravity = Vector(67.5f, 0.2f);
 
 Player::Player()
 {
@@ -53,7 +53,7 @@ Player::~Player()
 
 void Player::Move(Vector&& v, bool freio = false, bool shot = false)
 {
-    if(!shot)v.Add(gravity);
+    //if(!shot) v.Add(gravity);
     speed->Add(v);
 
     if(!freio) BBox()->RotateTo(360.0f - v.Angle());
@@ -75,7 +75,7 @@ void Player::Update()
         animEng->NextFrame();
         break;
     }
-    case LOST:
+    case EXPL:
     {
         animExp->NextFrame();
         break;
@@ -84,6 +84,8 @@ void Player::Update()
     case CLIMAX:
     case FINALIZE:
     {
+        speed->Add(gravity);
+
         // magnitude do vetor acelera��o
         float accel = 30.0f * gameTime;
 
@@ -120,10 +122,15 @@ void Player::Update()
             bool x = (CoopersReturn::gamepad->XboxAnalog(ThumbLX) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLX) < -100);
             bool y = (CoopersReturn::gamepad->XboxAnalog(ThumbLY) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLY) < -100);
 
-            if (x || y)
+            if ((x || y) && !atirando )
             {
+                atirando = true;
                 Move(Vector(shot_ang, 0.0f), false, true);
                 CoopersReturn::scene->Add(new Missile(), STATIC);
+            }
+            if (!x && !y)
+            {
+                atirando = false;
             }
         }
         else {

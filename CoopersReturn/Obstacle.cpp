@@ -53,8 +53,9 @@ Body::~Body()
 
 void Body::OnCollision(Object * obj)
 {
-    if (obj->Type() == MISSILE) {
-        CoopersReturn::scene->Add(new WallHit(X(), Y()), STATIC);
+    if (obj->Type() == MISSILE || obj->Type() == PLAYER) {
+        if(type != COMET) 
+            CoopersReturn::scene->Add(new WallHit(X(), Y()), STATIC);
         CoopersReturn::scene->Delete(this, MOVING);
     }
 }

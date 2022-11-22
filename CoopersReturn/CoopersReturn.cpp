@@ -118,18 +118,6 @@ void CoopersReturn::Update()
         viewport.bottom = game->Height();
     }
 
-    //// ---------------------------------
-    //// altera a posição da tela de fundo
-    //// ---------------------------------
-
-    //backg1->TranslateX(backVelocity * gameTime);
-    //if (backg1->Right() < 0)
-    //    backg1->TranslateX(window->CenterX() + backg1->Width());
-
-    //backg2->TranslateX(backVelocity * gameTime);
-    //if (backg2->Right() < 0)
-    //    backg2->TranslateX(window->CenterX() + backg2->Width());
-
     // ------------------------------------------------
     // gerencia elementos de acordo com o tempo de jogo
     // ------------------------------------------------
@@ -190,33 +178,30 @@ void CoopersReturn::Update()
         }
         break;
     }
+    case EXPL:
     case LOST:
     {
-        if (timer.Elapsed(2.0f))
+        if (timer.Elapsed(3.0f))
         {
             state = RESTART;
-            timer.Reset();
         }
         break;
     }
     case RESTART:
     {
-        if (timer.Elapsed(7.0f))
-        {
-            state = INIT;
+        state = INIT;
             
-            scene->DeleteAll();
+        scene->DeleteAll();
 
-            player = new Player();
+        player = new Player();
 
-            // adiciona objetos na cena
-            scene->Add(new Menu(), STATIC);
-            scene->Add(player, MOVING);
+        // adiciona objetos na cena
+        scene->Add(new Menu(), STATIC);
+        scene->Add(player, MOVING);
 
-            audio->Stop(END);
-            audio->Stop(INTRO);
-            audio->Play(INTRO);
-        }
+        audio->Stop(END);
+        audio->Stop(INTRO);
+        audio->Play(INTRO);
         break;
     }
     }
@@ -224,10 +209,16 @@ void CoopersReturn::Update()
 
 // ------------------------------------------------------------------------------
 
+void CoopersReturn::Restart()
+{
+    
+}
+
+// ------------------------------------------------------------------------------
+
 void CoopersReturn::Draw()
 {
-    // desenha pano de fundo
-    if (state == RESTART)
+    if (state == LOST)
     {
         font1->Draw(window->CenterX() - 150.0f, window->CenterY(), "Lembre-se da Lei de Murphy:", textColor);
         font1->Draw(window->CenterX() - 150.0f, window->CenterY() + 20.0f, "Qualquer coisa que possa ocorrer mal,", textColor);
@@ -263,14 +254,6 @@ void CoopersReturn::Finalize()
     delete backg2;
     delete gamepad;
 }
-
-// ------------------------------------------------------------------------------
-
-void CoopersReturn::Restart()
-{
-    
-}
-
 
 // ------------------------------------------------------------------------------
 //                                  WinMain                                      
