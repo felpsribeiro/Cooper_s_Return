@@ -78,6 +78,8 @@ void Player::Update()
     case EXPL:
     {
         animExp->NextFrame();
+        if (animExp->Inactive())
+            CoopersReturn::state = LOST;
         break;
     }
     case PLAY:
@@ -218,7 +220,7 @@ void Player::Draw()
 void Player::OnCollision(Object* obj) {
     //COMET, ASTEROID, METEOROID
     if (obj->Type() == COMET || obj->Type() == ASTEROID || obj->Type() == METEOROID) {
-        CoopersReturn::state = LOST;
+        CoopersReturn::state = EXPL;
         CoopersReturn::timer.Reset();
     }
 }
