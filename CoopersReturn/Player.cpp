@@ -51,9 +51,9 @@ Player::~Player()
 
 // -------------------------------------------------------------------------------
 
-void Player::Move(Vector&& v, bool freio = false)
+void Player::Move(Vector&& v, bool freio = false, bool shot = false)
 {
-    v.Add(gravity);
+    if(!shot)v.Add(gravity);
     speed->Add(v);
 
     if(!freio) BBox()->RotateTo(360.0f - v.Angle());
@@ -121,7 +121,7 @@ void Player::Update()
 
             if (x || y)
             {
-                Move(Vector(shot_ang, 0.0f));
+                Move(Vector(shot_ang, 0.0f), false, true);
                 CoopersReturn::scene->Add(new Missile(), STATIC);
             }
         }
