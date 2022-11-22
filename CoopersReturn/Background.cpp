@@ -15,14 +15,14 @@
 
 // -------------------------------------------------------------------------------
 
-Background::Background(string filename)
+Background::Background(string filename, float x, float y)
 {
     // carrega imagem
     image = new Image(filename);
 
     // configura registro spriteData
-    spriteData.x = Engine::window->CenterX();
-    spriteData.y = Engine::window->CenterY();
+    spriteData.x = x;
+    spriteData.y = y;
     spriteData.depth = Layer::BACK;
     spriteData.scale = 1.0f;    
     spriteData.rotation = 0.0f;

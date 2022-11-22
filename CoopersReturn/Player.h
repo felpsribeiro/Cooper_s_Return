@@ -16,14 +16,12 @@ class Player : public Object
 {
 private:
     Sprite * sprite;                    // sprite do objeto
-    //Particles * tail;                 // calda do jogador
     TileSet * engine;                   // motor
-    Animation * anim;                   // animação do motor
+    Animation * animEng;                   // animação do motor
     float scale = 1.0f;
 
     TileSet* explosion;                   // explosçao
-    Animation* anim_exp;                   // animação da explosão
-
+    Animation* animExp;                   // animação da explosão
 
 public:
     Vector * speed;                     // velocidade e dire��o

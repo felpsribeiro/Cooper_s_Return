@@ -19,11 +19,11 @@ enum ObjectIds { PLAYER, MISSILE, COMET, ASTEROID, METEOROID, HOLE };
 
 // ------------------------------------------------------------------------------
 
-enum SoundIds { INTRO, END, START, FIRE, EXPLODE, HITWALL };
+enum SoundIds { INTRO, END };
 
 // ------------------------------------------------------------------------------
 
-enum GameState { INIT, PLAY, FINALIZE };
+enum GameState { INIT, PLAY, CLIMAX, FINALIZE, LOST, RESTART };
 
 // ------------------------------------------------------------------------------
 
@@ -41,13 +41,11 @@ public:
     static Player * player;         // nave controlada pela jogador
     static Audio * audio;           // sitema de �udio
     static Scene * scene;           // cena do jogo
-    static uint state;             // jogo iniciou
+    static uint state;             // estado do jogo
     static Timer timer;            // medidor de tempo
     static Controller * gamepad;    // controlador de jogo
     static bool ctrl;
-    static bool lost;
     static void Restart();
-    static bool finalMusic;
 
     void Init();                    // inicializa��o
     void Update();                  // atualiza��o

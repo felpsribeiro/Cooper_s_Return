@@ -27,14 +27,17 @@ class Background
 private:
     SpriteData spriteData;              // informações do sprite 
     const Image * image;                // imagem de fundo
+    float x, y;
 
 public:
-    Background(string filename);        // construtor    
+    Background(string filename, float x, float y);        // construtor    
     ~Background();                      // destrutor
 
     void Draw(ViewPort & sourceRect);   // desenha uma porção da imagem 
     uint Width();                       // retorna a largura do pano de fundo
     uint Height();                      // retorna a altura do pano de fundo
+    float Right();
+    void TranslateX(float x);
 }; 
 
 // ---------------------------------------------------------------------------------
@@ -46,6 +49,14 @@ inline uint Background::Width()
 // retorna a altura do sprite
 inline uint Background::Height() 
 { return image->Height(); }
+
+// retorna posição x da sprite
+inline float Background::Right()
+{ return spriteData.x + Width()/2.0f; }
+
+// desloca a sprite no eixo X
+inline void Background::TranslateX(float x)
+{ spriteData.x += x; }
 
 // -------------------------------------------------------------------------------
 

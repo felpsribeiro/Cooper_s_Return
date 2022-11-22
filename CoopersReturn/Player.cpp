@@ -14,7 +14,6 @@ Player::Player()
     {
         Point(-31, -9),
         Point(-24, -19),
-        //Point(-19, -17),
         Point(1, -21),
         Point(28, -5),
         Point(28, 10),
@@ -27,13 +26,12 @@ Player::Player()
     BBox(new Poly(vertex, 9));
     
     type = PLAYER;
+
     engine = new TileSet("Resources/Propellant.png", 50, 32, 1, 8);
-    anim = new Animation(engine, 0.120f, true);
+    animEng = new Animation(engine, 0.120f, true);
 
     explosion = new TileSet("Resources/explosion.png", 240, 240, 8, 46);
-    anim_exp = new Animation(explosion, 0.02f, false);
-
-    speed = new Vector(0.0f, 0.0f);
+    animExp = new Animation(explosion, 0.02f, false);
 
     speed = new Vector(0.0f, 0.0f);
     MoveTo(game->CenterX(), game->CenterY());
@@ -45,9 +43,9 @@ Player::~Player()
 {
     delete sprite;
     delete speed;
-    // delete tail;
     delete engine;
-    delete anim;
+    delete animEng;
+    delete animExp;
 }
 
 // -------------------------------------------------------------------------------
@@ -66,12 +64,25 @@ void Player::Move(Vector&& v, bool freio = false)
 
 void Player::Update()
 {
-    if (CoopersReturn::state != INIT)
+    switch (CoopersReturn::state)
+    {
+    case INIT:
+    {
+        animEng->NextFrame();
+        break;
+    }
+    case LOST:
+    {
+        animExp->NextFrame();
+        break;
+    }
+    case PLAY:
+    case CLIMAX:
+    case FINALIZE:
     {
         // magnitude do vetor acelera��o
         float accel = 30.0f * gameTime;
 
-    
         if (CoopersReturn::ctrl) {
             CoopersReturn::gamepad->XboxUpdateState();
 
@@ -101,14 +112,14 @@ void Player::Update()
 
             // angulo de tiro
             float shot_ang = Line::Angle(Point(0, 0), Point(CoopersReturn::gamepad->XboxAnalog(ThumbLX) / 25.0f, -1.0f * (CoopersReturn::gamepad->XboxAnalog(ThumbLY) / 25.0f)));
-        
+
             bool x = (CoopersReturn::gamepad->XboxAnalog(ThumbLX) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLX) < -100);
             bool y = (CoopersReturn::gamepad->XboxAnalog(ThumbLY) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLY) < -100);
 
             if (x || y)
             {
                 Move(Vector(shot_ang, 0.0f));
-                
+
                 CoopersReturn::scene->Add(new Missile(), STATIC);
             }
         }
@@ -157,28 +168,37 @@ void Player::Update()
             MoveTo(game->Width() - 50, y);
         if (y > game->Height() - 50)
             MoveTo(x, game->Height() - 50);
-        
-        if (CoopersReturn::lost)
-            anim_exp->NextFrame();
+        break;
     }
-    else
-        anim->NextFrame();
+    }
 }
 
 // ---------------------------------------------------------------------------------
 
 void Player::Draw()
 {
-    if(!CoopersReturn::lost)
-        if (CoopersReturn::state == INIT)
-        {
-          sprite->Draw(x, y);
-          anim->Draw(x - 53.0f, y, Layer::UPPER);
-        }
-        else
-          sprite->Draw(x, y, Layer::MIDDLE, scale, -speed->Angle());
-    else
-        anim_exp->Draw(x, y, Layer::FRONT);
+    switch (CoopersReturn::state)
+    {
+    case LOST:
+    {
+        animExp->Draw(x, y, Layer::FRONT);
+        break;
+    }
+    case INIT:
+    {
+       sprite->Draw(x, y);
+       animEng->Draw(x - 53.0f, y, Layer::UPPER);
+       break;
+    }
+    case PLAY:
+    case CLIMAX:
+    case FINALIZE:
+    {
+        sprite->Draw(x, y, Layer::MIDDLE, scale, -speed->Angle());
+        break;
+    }
+    }
+    
 
 }
 
@@ -187,6 +207,7 @@ void Player::Draw()
 void Player::OnCollision(Object* obj) {
     //COMET, ASTEROID, METEOROID
     if (obj->Type() == COMET || obj->Type() == ASTEROID || obj->Type() == METEOROID) {
-        CoopersReturn::lost = true;
+        CoopersReturn::state = LOST;
+        CoopersReturn::timer.Reset();
     }
 }

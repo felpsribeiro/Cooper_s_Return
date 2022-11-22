@@ -119,7 +119,7 @@ void Obstacle::Generate(uint type, float m)
     case COMET: 
     {
         sprite = comet;
-        bb = new Circle(20.0f);
+        bb = new Circle(10.0f);
         hasTail = true;
         break;
     }

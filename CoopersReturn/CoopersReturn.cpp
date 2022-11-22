@@ -12,9 +12,7 @@ Scene  * CoopersReturn::scene   = nullptr;
 uint     CoopersReturn::state;
 Timer    CoopersReturn::timer;
 Controller * CoopersReturn::gamepad = new Controller();
-bool         CoopersReturn::ctrl = false;
-bool   CoopersReturn::finalMusic = false;
-bool   CoopersReturn::lost = false;
+bool CoopersReturn::ctrl = false;
 
 // ------------------------------------------------------------------------------
 
@@ -32,7 +30,7 @@ void CoopersReturn::Init()
 
     // carrega/incializa objetos
     backg1  = new Background("Resources/Space.jpg", window->CenterX(), window->CenterY());
-    //backg2  = new Background("Resources/Space.jpg", window->CenterX() + backg1->Width(), window->CenterY());
+    backg2  = new Background("Resources/Black.jpg", window->CenterX(), window->CenterY());
     player  = new Player();
     scene   = new Scene();
 
@@ -59,7 +57,6 @@ void CoopersReturn::Init()
     viewport.bottom = viewport.top + window->Height();
 
     ctrl = gamepad->XboxInitialize();
-    lost = false;
 }
 
 // ------------------------------------------------------------------------------
@@ -80,7 +77,7 @@ void CoopersReturn::Update()
 
     // ativa ou desativa o heads up display
     gamepad->XboxUpdateState();
-    if (window->KeyPress(VK_RETURN) || gamepad->XboxButton(ButtonStart))
+    if ((window->KeyPress(VK_RETURN) || gamepad->XboxButton(ButtonStart)) && state == INIT)
     {
         state = PLAY;
         timer.Reset();
@@ -133,7 +130,11 @@ void CoopersReturn::Update()
     // ------------------------------------------------
     // gerencia elementos de acordo com o tempo de jogo
     // ------------------------------------------------
-    if (state == PLAY) {
+    switch (state)
+    {
+    case PLAY:
+    case CLIMAX:
+    {
         if (!timer.Elapsed(60.0f)) // primeira etapa do jogo -> 0:00 à 0:59
         {
             if (auxTimer.Elapsed(4.0f))
@@ -161,6 +162,14 @@ void CoopersReturn::Update()
                 obstacle->Generate(COMET, 200.0f);
                 auxTimer.Reset();
             }
+
+            if (state != CLIMAX && timer.Elapsed(128.0f))
+            {
+                state = CLIMAX;
+
+                audio->Stop(INTRO);
+                audio->Play(END, false);
+            }
         }
         else if (state != FINALIZE)
         {
@@ -168,17 +177,37 @@ void CoopersReturn::Update()
             BlackHole* hole = new BlackHole();
             scene->Add(hole, STATIC);
         }
+        break;
     }
-
-    // ------------------------------------------------
-    // gerencia mísica de acordo com o tempo de jogo
-    // ------------------------------------------------
-    if (state == PLAY && timer.Elapsed(128.0f) && !finalMusic)
+    case LOST:
     {
-        finalMusic = true;
+        if (timer.Elapsed(2.0f))
+        {
+            state = RESTART;
+            timer.Reset();
+        }
+        break;
+    }
+    case RESTART:
+    {
+        if (timer.Elapsed(5.0f))
+        {
+            state = INIT;
+            
+            scene->DeleteAll();
 
-        audio->Stop(INTRO);
-        audio->Play(END, false);
+            player = new Player();
+
+            // adiciona objetos na cena
+            scene->Add(new Menu(), STATIC);
+            scene->Add(player, MOVING);
+
+            audio->Stop(END);
+            audio->Stop(INTRO);
+            audio->Play(INTRO);
+        }
+        break;
+    }
     }
 } 
 
@@ -187,15 +216,21 @@ void CoopersReturn::Update()
 void CoopersReturn::Draw()
 {
     // desenha pano de fundo
-    backg1->Draw(viewport);
-    //backg2->Draw(viewport);
+    if (state == RESTART)
+    {
+        //backg2->Draw(viewport);
+    }
+    else
+    {
+        backg1->Draw(viewport);
 
-    // desenha a cena
-    scene->Draw();
+        // desenha a cena
+        scene->Draw();
 
-    // desenha bounding box
-    if (viewBBox)
-        scene->DrawBBox();
+        // desenha bounding box
+        if (viewBBox)
+            scene->DrawBBox();
+    }
 }
 
 // ------------------------------------------------------------------------------
@@ -213,20 +248,7 @@ void CoopersReturn::Finalize()
 
 void CoopersReturn::Restart()
 {
-    state = INIT;
-
-    scene->Delete(player, MOVING);
-
-    player = new Player();
-
-    // adiciona objetos na cena
-    scene->Add(new Menu(), STATIC);
-    scene->Add(player, MOVING);
-
-    finalMusic = false;
-    audio->Stop(END);
-    audio->Stop(INTRO);
-    audio->Play(INTRO);
+    
 }
 
 

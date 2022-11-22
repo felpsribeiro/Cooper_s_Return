@@ -35,8 +35,8 @@ void BlackHole::Update()
     }
     else
     {
-        CoopersReturn::Restart();
-        CoopersReturn::scene->Delete(this, STATIC);
+        CoopersReturn::state == RESTART;
+        CoopersReturn::timer.Reset();
     }
 
     anim->NextFrame();
