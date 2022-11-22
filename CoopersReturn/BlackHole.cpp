@@ -12,6 +12,9 @@ BlackHole::BlackHole()
     anim = new Animation(eventHorizon, 0.060f, true);
     type = HOLE;
 
+    font = new Font("Resources/SimSun16.png");
+    font->Spacing("Resources/SimSun16.dat");
+
     MoveTo(game->CenterX(), -173.0f);
 }
 
@@ -51,6 +54,9 @@ void BlackHole::Draw()
 
     if (y > 173.0f)
        hole->Draw(x, y - 762.0f, Layer::FRONT);
+
+    Color textColor{ 1.0f, 1.0f, 1.0f, 1.0f };
+    font->Draw(400.0f, 500.0f, "Conseguimos... Cooper consiguira ve a sua filha novamente! Entre no Gargantua AGORA.", textColor, Layer::UPPER);
 }
 
 // -------------------------------------------------------------------------------
