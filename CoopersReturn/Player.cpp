@@ -191,7 +191,7 @@ void Player::Draw()
 {
     switch (CoopersReturn::state)
     {
-    case LOST:
+    case EXPL:
     {
         animExp->Draw(x, y, Layer::FRONT);
         break;
