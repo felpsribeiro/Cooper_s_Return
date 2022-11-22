@@ -4,7 +4,7 @@
 #include "CoopersReturn.h"
 
 // -------------------------------------------------------------------------------
-const Vector gravity = Vector(0.0f, 0.1f);
+const Vector gravity = Vector(45.0f, 2.0f);
 
 Player::Player()
 {
