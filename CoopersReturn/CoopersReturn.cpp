@@ -31,7 +31,7 @@ void CoopersReturn::Init()
     audio->Play(INTRO, true);
 
     // carrega/incializa objetos
-    backg1  = new Background("Resources/Space.jpg", window->CenterX(), window->CenterY());
+    backg1  = new Background("Resources/Space.jpg");
     //backg2  = new Background("Resources/Space.jpg", window->CenterX() + backg1->Width(), window->CenterY());
     player  = new Player();
     scene   = new Scene();

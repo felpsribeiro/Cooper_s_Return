@@ -69,103 +69,104 @@ void Player::Move(Vector&& v, bool freio = false)
 
 void Player::Update()
 {
-    if (CoopersReturn::state != INIT)
-    {
-        // magnitude do vetor acelera��o
-        float accel = 30.0f * gameTime;
+    if(!CoopersReturn::lost)
+        if (CoopersReturn::state != INIT)
+        {
+            // magnitude do vetor acelera��o
+            float accel = 30.0f * gameTime;
 
     
-        if (CoopersReturn::ctrl) {
-            CoopersReturn::gamepad->XboxUpdateState();
+            if (CoopersReturn::ctrl) {
+                CoopersReturn::gamepad->XboxUpdateState();
 
-            float ang = Line::Angle(Point(0, 0), Point(CoopersReturn::gamepad->XboxAnalog(ThumbRX) / 25.0f, -1.0f * (CoopersReturn::gamepad->XboxAnalog(ThumbRY) / 25.0f)));
-            float mag = Point::Distance(Point(0, 0), Point(CoopersReturn::gamepad->XboxAnalog(ThumbRX) / 25.0f, -1.0f * (CoopersReturn::gamepad->XboxAnalog(ThumbRY) / 25.0f)));
+                float ang = Line::Angle(Point(0, 0), Point(CoopersReturn::gamepad->XboxAnalog(ThumbRX) / 25.0f, -1.0f * (CoopersReturn::gamepad->XboxAnalog(ThumbRY) / 25.0f)));
+                float mag = Point::Distance(Point(0, 0), Point(CoopersReturn::gamepad->XboxAnalog(ThumbRX) / 25.0f, -1.0f * (CoopersReturn::gamepad->XboxAnalog(ThumbRY) / 25.0f)));
 
-            // nenhuma direção selecionada
-            if (mag == 0)
-            {
-                // se a velocidade estiver muita baixa
-                if (speed->Magnitude() < 0.1)
+                // nenhuma direção selecionada
+                if (mag == 0)
                 {
-                    // apenas pare
-                    speed->ScaleTo(0.0f);
+                    // se a velocidade estiver muita baixa
+                    if (speed->Magnitude() < 0.1)
+                    {
+                        // apenas pare
+                        speed->ScaleTo(0.0f);
+                    }
+                    else
+                    {
+                        // comece a frear
+                        Move(Vector(speed->Angle() + 180.0f, 5.0f * gameTime), true);
+                    }
                 }
                 else
                 {
-                    // comece a frear
-                    Move(Vector(speed->Angle() + 180.0f, 5.0f * gameTime), true);
+                    // ande na direção selecionada
+                    Move(Vector(ang, mag * gameTime));
                 }
-            }
-            else
-            {
-                // ande na direção selecionada
-                Move(Vector(ang, mag * gameTime));
-            }
 
-            // angulo de tiro
-            float shot_ang = Line::Angle(Point(0, 0), Point(CoopersReturn::gamepad->XboxAnalog(ThumbLX) / 25.0f, -1.0f * (CoopersReturn::gamepad->XboxAnalog(ThumbLY) / 25.0f)));
+                // angulo de tiro
+                float shot_ang = Line::Angle(Point(0, 0), Point(CoopersReturn::gamepad->XboxAnalog(ThumbLX) / 25.0f, -1.0f * (CoopersReturn::gamepad->XboxAnalog(ThumbLY) / 25.0f)));
         
-            bool x = (CoopersReturn::gamepad->XboxAnalog(ThumbLX) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLX) < -100);
-            bool y = (CoopersReturn::gamepad->XboxAnalog(ThumbLY) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLY) < -100);
+                bool x = (CoopersReturn::gamepad->XboxAnalog(ThumbLX) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLX) < -100);
+                bool y = (CoopersReturn::gamepad->XboxAnalog(ThumbLY) > 100 || CoopersReturn::gamepad->XboxAnalog(ThumbLY) < -100);
 
-            if (x || y)
-            {
-                Move(Vector(shot_ang, 0.0f));
+                if (x || y)
+                {
+                    Move(Vector(shot_ang, 0.0f));
                 
-                CoopersReturn::scene->Add(new Missile(), STATIC);
+                    CoopersReturn::scene->Add(new Missile(), STATIC);
+                }
             }
-        }
-        else {
-            // modifica vetor velocidade do player
-            if (window->KeyDown(VK_RIGHT) && window->KeyDown(VK_UP))
-                Move(Vector(45.0f, accel));
-            else if (window->KeyDown(VK_LEFT) && window->KeyDown(VK_UP))
-                Move(Vector(135.0f, accel));
-            else if (window->KeyDown(VK_LEFT) && window->KeyDown(VK_DOWN))
-                Move(Vector(225.0f, accel));
-            else if (window->KeyDown(VK_RIGHT) && window->KeyDown(VK_DOWN))
-                Move(Vector(315.0f, accel));
-            else if (window->KeyDown(VK_RIGHT))
-                Move(Vector(0.0f, accel));
-            else if (window->KeyDown(VK_LEFT))
-                Move(Vector(180.0f, accel));
-            else if (window->KeyDown(VK_UP))
-                Move(Vector(90.0f, accel));
-            else if (window->KeyDown(VK_DOWN))
-                Move(Vector(270.0f, accel));
-            else
-                // se nenhuma tecla está pressionada comece a frear
-                if (speed->Magnitude() > 0.1f)
-                    Move(Vector(speed->Angle() + 180.0f, 5.0f * gameTime));
+            else {
+                // modifica vetor velocidade do player
+                if (window->KeyDown(VK_RIGHT) && window->KeyDown(VK_UP))
+                    Move(Vector(45.0f, accel));
+                else if (window->KeyDown(VK_LEFT) && window->KeyDown(VK_UP))
+                    Move(Vector(135.0f, accel));
+                else if (window->KeyDown(VK_LEFT) && window->KeyDown(VK_DOWN))
+                    Move(Vector(225.0f, accel));
+                else if (window->KeyDown(VK_RIGHT) && window->KeyDown(VK_DOWN))
+                    Move(Vector(315.0f, accel));
+                else if (window->KeyDown(VK_RIGHT))
+                    Move(Vector(0.0f, accel));
+                else if (window->KeyDown(VK_LEFT))
+                    Move(Vector(180.0f, accel));
+                else if (window->KeyDown(VK_UP))
+                    Move(Vector(90.0f, accel));
+                else if (window->KeyDown(VK_DOWN))
+                    Move(Vector(270.0f, accel));
                 else
-                    // velocidade muita baixa, não use soma vetorial, apenas pare
-                    speed->ScaleTo(0.0f);
+                    // se nenhuma tecla está pressionada comece a frear
+                    if (speed->Magnitude() > 0.1f)
+                        Move(Vector(speed->Angle() + 180.0f, 5.0f * gameTime));
+                    else
+                        // velocidade muita baixa, não use soma vetorial, apenas pare
+                        speed->ScaleTo(0.0f);
 
-            // dispara m�ssil
-            if (window->KeyPress(VK_SPACE))
-            {
-                CoopersReturn::scene->Add(new Missile(), STATIC);
+                // dispara m�ssil
+                if (window->KeyPress(VK_SPACE))
+                {
+                    CoopersReturn::scene->Add(new Missile(), STATIC);
+                }
             }
-        }
 
-        // movimenta objeto pelo seu vetor velocidade
-        Translate(speed->XComponent() * 50.0f * gameTime, -speed->YComponent() * 50.0f * gameTime);
+            // movimenta objeto pelo seu vetor velocidade
+            Translate(speed->XComponent() * 50.0f * gameTime, -speed->YComponent() * 50.0f * gameTime);
 
-        // restringe a �rea do jogo
-        if (x < 50)
-            MoveTo(50, y);
-        if (y < 50)
-            MoveTo(x, 50);
-        if (x > game->Width() - 50)
-            MoveTo(game->Width() - 50, y);
-        if (y > game->Height() - 50)
-            MoveTo(x, game->Height() - 50);
+            // restringe a �rea do jogo
+            if (x < 50)
+                MoveTo(50, y);
+            if (y < 50)
+                MoveTo(x, 50);
+            if (x > game->Width() - 50)
+                MoveTo(game->Width() - 50, y);
+            if (y > game->Height() - 50)
+                MoveTo(x, game->Height() - 50);
         
-        if (CoopersReturn::lost)
-            anim_exp->NextFrame();
-    }
-    else
-        anim->NextFrame();
+            if (CoopersReturn::lost)
+                anim_exp->NextFrame();
+        }
+        else
+            anim->NextFrame();
 }
 
 // ---------------------------------------------------------------------------------
