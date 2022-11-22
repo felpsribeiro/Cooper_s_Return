@@ -162,11 +162,11 @@ void Player::Update()
             if (y > game->Height() - 50)
                 MoveTo(x, game->Height() - 50);
         
-            if (CoopersReturn::lost)
-                anim_exp->NextFrame();
         }
         else
             anim->NextFrame();
+    else
+        anim_exp->NextFrame();
 }
 
 // ---------------------------------------------------------------------------------
